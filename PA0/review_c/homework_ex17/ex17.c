@@ -35,8 +35,8 @@ Connection* Database_open(char *filename, char action)
 {
 	Connection *conn = malloc(sizeof(Connection));
 	if(!conn) die("conn cannot malloc"); 
-	if(action == 'g') {
-		conn->file = fopen(filename, "r");
+	if(action == 'c') {
+		conn->file = fopen(filename, "w");
 	}else {
 		conn->file = fopen(filename, "r+");
 	}
@@ -58,9 +58,7 @@ void Database_loader(Database *data, FILE *file)
 		die("Database_loader fread error");
 	}
 }
-void Database_create(Connection *conn)
-{
-}
+
 void Address_print(Address *info, int id)
 {
 	printf("id: %d\tname: %s\temail: %s\n\r", id, info->name, info->email);
@@ -80,6 +78,13 @@ void Database_write(Connection *conn)
 {
 	rewind(conn->file);
 	int res = fwrite(conn->data, sizeof(Database), 1, conn->file);
+	if (res != 1) {
+		die("wirte data to file error!");
+	}
+	res = fflush(conn->file);
+	if (res == EOF) {
+		die("fflush file error!");
+	}
 }
 
 void Database_set(Connection *conn, int id, char *name, char *email)
@@ -116,6 +121,28 @@ void Database_delete(Connection * conn, int id)
 		conn->data->address[id].set = 0;
 		printf("delete %d successful!\n\r", id);
 	}
+	Database_write(conn);
+}
+
+//for init the address array of conn->data
+void Database_create(Connection *conn)
+{
+	for (int i = 0; i < MAX_ROWS; ++ i)
+	{
+		Address address = {.set = 0};
+		conn->data->address[i] = address;
+	}
+}
+
+void Database_close(Connection *conn)
+{
+	if (conn->file) {
+		free(conn->file);
+	}
+	if (conn->data) {
+		free(conn->data);
+	}
+	free(conn);
 }
 int main(int argc, char* argv[])
 {
@@ -132,6 +159,7 @@ int main(int argc, char* argv[])
 	switch (action){
 	case 'c':
 		Database_create(conn);
+		Database_write(conn);
 		break;
 	case 'g':
 		if (argc < 4) {
@@ -159,5 +187,6 @@ int main(int argc, char* argv[])
 	default:
 		die("please input the operation!");
 	}	
+	Database_close(conn);
 	return 0;
 }
