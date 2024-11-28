@@ -15,7 +15,6 @@ int main(int argc, char **argv) {
     top->trace(tfp, 99);
     Verilated::mkdir("logs");
     tfp->open("logs/simx.fst");
-    
     while (!contextp->gotFinish()) {
         int a = rand() & 1;
         int b = rand() & 1;

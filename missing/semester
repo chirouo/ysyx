@@ -1,0 +1,2 @@
+#!/bin/sh
+curl --head --silent hhtps://missing.scail.mit.edu
