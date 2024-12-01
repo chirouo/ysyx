@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "list.h": "c",
+        "*.tcc": "c",
+        "cstdlib": "c",
+        "memory": "c",
+        "assert.h": "c",
+        "bitset": "cpp",
+        "dbg.h": "c"
+    }
+}
