@@ -1,0 +1,10 @@
+gcc -g -Wall -O2 -I./src/lcthw -I./src/lcthw/test  -o minunit src/lcthw/list.o src/lcthw/list_algos.o src/lcthw/test/minunit.o
+/usr/bin/ld: src/lcthw/test/minunit.o: in function `test_bubble_sort':
+/home/gx/ysyx/review_c/homework_ex33/liblcthw/src/lcthw/test/minunit.c:47: undefined reference to `List_destroy'
+/usr/bin/ld: /home/gx/ysyx/review_c/homework_ex33/liblcthw/src/lcthw/test/minunit.c:55: undefined reference to `List_destroy'
+/usr/bin/ld: src/lcthw/test/minunit.o: in function `test_merge_sort':
+/home/gx/ysyx/review_c/homework_ex33/liblcthw/src/lcthw/test/minunit.c:70: undefined reference to `List_destroy'
+/usr/bin/ld: /home/gx/ysyx/review_c/homework_ex33/liblcthw/src/lcthw/test/minunit.c:71: undefined reference to `List_destroy'
+/usr/bin/ld: /home/gx/ysyx/review_c/homework_ex33/liblcthw/src/lcthw/test/minunit.c:73: undefined reference to `List_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:16: minunit] Error 1

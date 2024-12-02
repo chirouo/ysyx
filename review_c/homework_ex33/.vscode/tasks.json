@@ -4,7 +4,10 @@
         {
             "label": "Build with Makefile",
             "type": "shell",
-            "command": "make clean && make all",
+            "command": "make",
+            "args": [
+                "all"
+            ],
             "options": {
                 "cwd": "${fileDirname}/../../.."
             },

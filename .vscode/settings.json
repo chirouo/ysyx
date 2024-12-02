@@ -6,6 +6,10 @@
         "memory": "c",
         "assert.h": "c",
         "bitset": "cpp",
-        "dbg.h": "c"
+        "dbg.h": "c",
+        "system_error": "cpp",
+        "list_algos.h": "c",
+        "minunit.h": "c",
+        "string.h": "c"
     }
 }
