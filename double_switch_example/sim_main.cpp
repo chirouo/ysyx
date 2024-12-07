@@ -20,12 +20,11 @@ int main(int argc, char **argv) {
         int b = rand() & 1;
         top->a = a;
         top->b = b;
-        contextp->timeInc(1);
         top->eval();
-        tfp->dump(contextp->time());
         printf("a = %d, b = %d, f = %d\n", a, b, top->f);
         assert(top->f == (a ^ b));
     }
+    top->final();
     tfp->close();
     delete tfp;
     delete top;

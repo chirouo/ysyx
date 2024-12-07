@@ -3,6 +3,8 @@
 #include "Vour.cpp"
 #include "Vour___024root__DepSet_hf7027e39__0.cpp"
 #include "Vour___024root__DepSet_h637983f1__0.cpp"
+#include "Vour__Trace__0.cpp"
 #include "Vour___024root__Slow.cpp"
 #include "Vour___024root__DepSet_h637983f1__0__Slow.cpp"
 #include "Vour__Syms.cpp"
+#include "Vour__Trace__0__Slow.cpp"
