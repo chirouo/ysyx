@@ -2,7 +2,7 @@ module top(
     input clk,
     input rst,
     input [4:0] btn,
-    input [7:0] sw,
+    input [9:0] sw,
     input ps2_clk,
     input ps2_data,
     input uart_rx,
@@ -24,12 +24,21 @@ module top(
     output [7:0] seg6,
     output [7:0] seg7
 );
-
-light my_led(
-    .clk(clk),
-    .rst(rst),
-    .led(ledr)
-);
+MuxKeyWithDefault  #(4, 2, 2) my_mux41 (
+    .out(ledr[1:0]), 
+    .key(sw[1:0]), 
+    .default_out(2'b00), 
+    .lut({
+        2'b00, sw[3:2],
+        2'b01, sw[5:4],
+        2'b10, sw[7:6],
+        2'b11, sw[9:8]
+    }));
+// light my_led(
+//     .clk(clk),
+//     .rst(rst),
+//     .led(ledr)
+// );
 
 assign VGA_CLK = clk;
 
