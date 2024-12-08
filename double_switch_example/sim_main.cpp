@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
     Verilated::mkdir("logs");
     tfp->open("logs/simx.fst");
     while (!contextp->gotFinish()) {
+        contextp->timeInc(1);
         int a = rand() & 1;
         int b = rand() & 1;
         top->a = a;
@@ -23,6 +24,11 @@ int main(int argc, char **argv) {
         top->eval();
         printf("a = %d, b = %d, f = %d\n", a, b, top->f);
         assert(top->f == (a ^ b));
+        if (contextp->time() >= 60)
+        {
+            break;
+        }
+        tfp->dump(contextp->time());
     }
     top->final();
     tfp->close();
