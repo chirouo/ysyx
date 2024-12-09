@@ -24,21 +24,34 @@ module top(
     output [7:0] seg6,
     output [7:0] seg7
 );
-
-Experiment_2
-assign seg0=8'b01011100;
-wire[2:0] temp;
-decode38 my_decode38(
-    .x(temp[2:0]),
-    .en(sw[15]),
-    .y({seg0[0], seg0[1], seg0[2], seg0[3], seg0[4], seg0[5], seg0[6], seg0[7]})//, this seven seg is reverse
+//Experiment_3
+//Test btn
+    // assign ledr[4:0] = btn[4:0];
+ALU alu(
+    .ALU_control(btn[2:0]), 
+    .in_x(sw[15:12]),
+    .in_y(sw[3:0]),
+    .in_c(sw[4]),
+    .out_s(ledr[3:0]),
+    .out_c(ledr[4]),
+    .ow(ledr[15]),
+    .neg(ledr[14]),
+    .zero(ledr[13])
 );
-pri_encode83 my_encode83(
-    .x(sw[7:0]),
-    .en(sw[14]),
-    .y(temp)
-);
-//Experiment_1
+//Experiment_2
+// assign seg0=8'b01011100;
+// wire[2:0] temp;
+// decode38 my_decode38(
+//     .x(temp[2:0]),
+//     .en(sw[15]),
+//     .y({seg0[0], seg0[1], seg0[2], seg0[3], seg0[4], seg0[5], seg0[6], seg0[7]})
+// );
+// pri_encode83 my_encode83(
+//     .x(sw[7:0]),
+//     .en(sw[14]),
+//     .y(temp)
+// );
+// Experiment_1
 // MuxKeyWithDefault  #(4, 2, 2) my_mux41 (
 //     .out(ledr[1:0]), 
 //     .key(sw[1:0]), 
@@ -49,6 +62,8 @@ pri_encode83 my_encode83(
 //         2'b10, sw[7:6],
 //         2'b11, sw[9:8]
 //     }));
+
+//Example of running water lamp
 // light my_led(
 //     .clk(clk),
 //     .rst(rst),
