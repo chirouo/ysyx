@@ -46,7 +46,7 @@ class Vtop VL_NOT_FINAL : public VerilatedModel {
     VL_OUT8(&seg5,7,0);
     VL_OUT8(&seg6,7,0);
     VL_OUT8(&seg7,7,0);
-    VL_IN16(&sw,9,0);
+    VL_IN16(&sw,15,0);
     VL_OUT16(&ledr,15,0);
 
     // CELLS

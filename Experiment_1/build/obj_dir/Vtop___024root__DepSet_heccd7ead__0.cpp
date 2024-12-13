@@ -6,89 +6,55 @@
 
 #include "Vtop___024root.h"
 
+extern const VlUnpacked<CData/*2:0*/, 512> Vtop__ConstPool__TABLE_h0d68042a_0;
+extern const VlUnpacked<CData/*7:0*/, 16> Vtop__ConstPool__TABLE_hb3987e8f_0;
+
 VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ico_sequent__TOP__0\n"); );
     // Init
-    CData/*1:0*/ top__DOT____Vcellout__my_mux41__out;
-    top__DOT____Vcellout__my_mux41__out = 0;
-    CData/*1:0*/ top__DOT__my_mux41__DOT__i0__DOT__lut_out;
-    top__DOT__my_mux41__DOT__i0__DOT__lut_out = 0;
-    CData/*0:0*/ top__DOT__my_mux41__DOT__i0__DOT__hit;
-    top__DOT__my_mux41__DOT__i0__DOT__hit = 0;
+    CData/*2:0*/ top__DOT__temp;
+    top__DOT__temp = 0;
+    CData/*7:0*/ top__DOT____Vcellout__my_decode38__y;
+    top__DOT____Vcellout__my_decode38__y = 0;
+    CData/*3:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
+    SData/*8:0*/ __Vtableidx2;
+    __Vtableidx2 = 0;
     // Body
     vlSelf->VGA_CLK = vlSelf->clk;
     vlSelf->uart_tx = vlSelf->uart_rx;
-    vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list[0U] 
-        = (3U & ((IData)(vlSelf->sw) >> 8U));
-    vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list[1U] 
-        = (3U & ((IData)(vlSelf->sw) >> 6U));
-    vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list[2U] 
-        = (3U & ((IData)(vlSelf->sw) >> 4U));
-    vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list[3U] 
-        = (3U & ((IData)(vlSelf->sw) >> 2U));
-    top__DOT__my_mux41__DOT__i0__DOT__lut_out = ((- (IData)(
-                                                            ((3U 
-                                                              & (IData)(vlSelf->sw)) 
-                                                             == 
-                                                             vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                             [0U]))) 
-                                                 & vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list
-                                                 [0U]);
-    top__DOT__my_mux41__DOT__i0__DOT__hit = ((3U & (IData)(vlSelf->sw)) 
-                                             == vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                             [0U]);
-    top__DOT__my_mux41__DOT__i0__DOT__lut_out = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__lut_out) 
-                                                 | ((- (IData)(
-                                                               ((3U 
-                                                                 & (IData)(vlSelf->sw)) 
-                                                                == 
-                                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                                [1U]))) 
-                                                    & vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list
-                                                    [1U]));
-    top__DOT__my_mux41__DOT__i0__DOT__hit = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__hit) 
-                                             | ((3U 
-                                                 & (IData)(vlSelf->sw)) 
-                                                == 
-                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                [1U]));
-    top__DOT__my_mux41__DOT__i0__DOT__lut_out = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__lut_out) 
-                                                 | ((- (IData)(
-                                                               ((3U 
-                                                                 & (IData)(vlSelf->sw)) 
-                                                                == 
-                                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                                [2U]))) 
-                                                    & vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list
-                                                    [2U]));
-    top__DOT__my_mux41__DOT__i0__DOT__hit = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__hit) 
-                                             | ((3U 
-                                                 & (IData)(vlSelf->sw)) 
-                                                == 
-                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                [2U]));
-    top__DOT__my_mux41__DOT__i0__DOT__lut_out = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__lut_out) 
-                                                 | ((- (IData)(
-                                                               ((3U 
-                                                                 & (IData)(vlSelf->sw)) 
-                                                                == 
-                                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                                [3U]))) 
-                                                    & vlSelf->top__DOT__my_mux41__DOT__i0__DOT__data_list
-                                                    [3U]));
-    top__DOT__my_mux41__DOT__i0__DOT__hit = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__hit) 
-                                             | ((3U 
-                                                 & (IData)(vlSelf->sw)) 
-                                                == 
-                                                vlSelf->top__DOT__my_mux41__DOT__i0__DOT__key_list
-                                                [3U]));
-    top__DOT____Vcellout__my_mux41__out = ((IData)(top__DOT__my_mux41__DOT__i0__DOT__hit)
-                                            ? (IData)(top__DOT__my_mux41__DOT__i0__DOT__lut_out)
-                                            : 0U);
-    vlSelf->ledr = ((0xfffcU & (IData)(vlSelf->ledr)) 
-                    | (IData)(top__DOT____Vcellout__my_mux41__out));
+    __Vtableidx2 = ((0x1feU & ((IData)(vlSelf->sw) 
+                               << 1U)) | (1U & ((IData)(vlSelf->sw) 
+                                                >> 0xeU)));
+    top__DOT__temp = Vtop__ConstPool__TABLE_h0d68042a_0
+        [__Vtableidx2];
+    __Vtableidx1 = (((IData)(top__DOT__temp) << 1U) 
+                    | (1U & ((IData)(vlSelf->sw) >> 0xfU)));
+    top__DOT____Vcellout__my_decode38__y = Vtop__ConstPool__TABLE_hb3987e8f_0
+        [__Vtableidx1];
+    vlSelf->seg0 = ((0x80U & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                              << 7U)) | ((0x40U & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                   << 5U)) 
+                                         | ((0x20U 
+                                             & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                << 3U)) 
+                                            | ((0x10U 
+                                                & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                   << 1U)) 
+                                               | ((8U 
+                                                   & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                      >> 1U)) 
+                                                  | ((4U 
+                                                      & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                         >> 3U)) 
+                                                     | ((2U 
+                                                         & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                            >> 5U)) 
+                                                        | (1U 
+                                                           & ((IData)(top__DOT____Vcellout__my_decode38__y) 
+                                                              >> 7U)))))))));
 }
 
 void Vtop___024root___eval_ico(Vtop___024root* vlSelf) {
@@ -126,16 +92,10 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync = 0;
     CData/*3:0*/ __Vdly__top__DOT__my_keyboard__DOT__count;
     __Vdly__top__DOT__my_keyboard__DOT__count = 0;
-    IData/*31:0*/ __Vdly__top__DOT__my_seg__DOT__count;
-    __Vdly__top__DOT__my_seg__DOT__count = 0;
-    CData/*2:0*/ __Vdly__top__DOT__my_seg__DOT__offset;
-    __Vdly__top__DOT__my_seg__DOT__offset = 0;
     // Body
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync 
         = vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync;
     __Vdly__top__DOT__my_keyboard__DOT__count = vlSelf->top__DOT__my_keyboard__DOT__count;
-    __Vdly__top__DOT__my_seg__DOT__count = vlSelf->top__DOT__my_seg__DOT__count;
-    __Vdly__top__DOT__my_seg__DOT__offset = vlSelf->top__DOT__my_seg__DOT__offset;
     __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt;
     __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt;
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync 
@@ -170,52 +130,22 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         }
     }
     if (vlSelf->rst) {
-        __Vdly__top__DOT__my_seg__DOT__count = 0U;
-        __Vdly__top__DOT__my_seg__DOT__offset = 0U;
         __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 1U;
         __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = 1U;
+    } else if ((0x320U == (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt))) {
+        __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = 
+            ((0x20dU == (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt))
+              ? 1U : (0x3ffU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt))));
+        __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 1U;
     } else {
-        if ((0x4c4b40U == vlSelf->top__DOT__my_seg__DOT__count)) {
-            __Vdly__top__DOT__my_seg__DOT__offset = 
-                (7U & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)));
-            __Vdly__top__DOT__my_seg__DOT__count = 0U;
-        } else {
-            __Vdly__top__DOT__my_seg__DOT__count = 
-                ((IData)(1U) + vlSelf->top__DOT__my_seg__DOT__count);
-        }
-        if ((0x320U == (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt))) {
-            __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt 
-                = ((0x20dU == (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt))
-                    ? 1U : (0x3ffU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt))));
-            __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 1U;
-        } else {
-            __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt 
-                = (0x3ffU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)));
-        }
+        __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 
+            (0x3ffU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)));
     }
     vlSelf->top__DOT__my_keyboard__DOT__count = __Vdly__top__DOT__my_keyboard__DOT__count;
     vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync 
         = __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync;
-    vlSelf->top__DOT__my_seg__DOT__count = __Vdly__top__DOT__my_seg__DOT__count;
-    vlSelf->top__DOT__my_seg__DOT__offset = __Vdly__top__DOT__my_seg__DOT__offset;
     vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt = __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt;
     vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt = __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt;
-    vlSelf->seg0 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [vlSelf->top__DOT__my_seg__DOT__offset]));
-    vlSelf->seg1 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg2 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(2U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg3 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(3U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg4 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(4U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg5 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(5U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg6 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(6U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
-    vlSelf->seg7 = (0xffU & (~ vlSelf->top__DOT__my_seg__DOT__segs
-                             [(7U & ((IData)(7U) + (IData)(vlSelf->top__DOT__my_seg__DOT__offset)))]));
     vlSelf->VGA_HSYNC = (0x60U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt));
     top__DOT__my_vga_ctrl__DOT__h_valid = ((0x90U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)) 
                                            & (0x310U 
@@ -340,8 +270,6 @@ void Vtop___024root___eval_debug_assertions(Vtop___024root* vlSelf) {
         Verilated::overWidthError("rst");}
     if (VL_UNLIKELY((vlSelf->btn & 0xe0U))) {
         Verilated::overWidthError("btn");}
-    if (VL_UNLIKELY((vlSelf->sw & 0xfc00U))) {
-        Verilated::overWidthError("sw");}
     if (VL_UNLIKELY((vlSelf->ps2_clk & 0xfeU))) {
         Verilated::overWidthError("ps2_clk");}
     if (VL_UNLIKELY((vlSelf->ps2_data & 0xfeU))) {

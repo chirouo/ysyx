@@ -30,6 +30,7 @@ VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     // Init
     VlWide<5>/*159:0*/ __Vtemp_h146a064b__0;
     // Body
+    vlSelf->seg0 = 0x5cU;
     __Vtemp_h146a064b__0[0U] = 0x2e686578U;
     __Vtemp_h146a064b__0[1U] = 0x74757265U;
     __Vtemp_h146a064b__0[2U] = 0x2f706963U;

@@ -25,7 +25,7 @@ module top(
     output [7:0] seg7
 );
 
-Experiment_2
+//Experiment_2
 assign seg0=8'b01011100;
 wire[2:0] temp;
 decode38 my_decode38(
