@@ -24,15 +24,50 @@ module top(
     output [7:0] seg6,
     output [7:0] seg7
 );
-  
+
+
 //Experiment_7
-mealy mymealy(
-    .reset(sw[0]),
-    .in_x(sw[1]),
-    .clk(sw[3]),
-    .out_s(ledr[0]),
-    .state(ledr[7:4])
+wire[7:0]  temp_seg_1, temp_seg_2, temp_seg_3;
+ps2_keyboard_temp my_keyboard(
+    .clk(clk),
+    .clrn(~rst),
+    .ps2_clk(ps2_clk),
+    .ps2_data(ps2_data),
+    .data(temp_seg_3),
+    .nextdata_n(sw[0]),
+    .ready(ledr[15]),
+    .overflow(ledr[14]),
+
+    .count_c(temp_seg_1)
 );
+LUT mylut(
+    .clk(clk),
+    .in_x(temp_seg_3),
+    .dout(temp_seg_2)
+);
+SEGSHOW myshow01(
+    .seg_1(seg0),
+    .seg_2(seg1),
+    .in_x(temp_seg_3)
+);
+SEGSHOW myshow23(
+    .seg_1(seg2),
+    .seg_2(seg3),
+    .in_x(temp_seg_2)
+);
+SEGSHOW myshow45(
+    .seg_1(seg4),
+    .seg_2(seg5),
+    .in_x(temp_seg_1)
+);
+
+// mealy mymealy(
+//     .reset(sw[0]),
+//     .in_x(sw[1]),
+//     .clk(sw[3]),
+//     .out_s(ledr[0]),
+//     .state(ledr[7:4])
+// );
 // mealy mymoore(
 //     .reset(sw[0]),
 //     .in_x(sw[1]),
@@ -120,12 +155,13 @@ vga_ctrl my_vga_ctrl(
     .vga_b(VGA_B)
 );
 
-ps2_keyboard my_keyboard(
-    .clk(clk),
-    .resetn(~rst),
-    .ps2_clk(ps2_clk),
-    .ps2_data(ps2_data)
-);
+// ps2_keyboard my_keyboard(
+//     .clk(clk),
+//     .resetn(~rst),
+//     .ps2_clk(ps2_clk),
+//     .ps2_data(ps2_data),
+//     .buffer(ledr[7:0])
+// );
 
 // seg my_seg(
 //     .clk(clk),

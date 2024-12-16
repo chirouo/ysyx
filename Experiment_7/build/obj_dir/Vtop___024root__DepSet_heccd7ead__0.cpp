@@ -11,9 +11,6 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ico_sequent__TOP__0\n"); );
     // Body
-    vlSelf->top__DOT____Vcellinp__mymealy__clk = (1U 
-                                                  & ((IData)(vlSelf->sw) 
-                                                     >> 3U));
     vlSelf->VGA_CLK = vlSelf->clk;
     vlSelf->uart_tx = vlSelf->uart_rx;
 }
@@ -34,6 +31,9 @@ void Vtop___024root___eval_act(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_act\n"); );
 }
 
+extern const VlUnpacked<CData/*7:0*/, 256> Vtop__ConstPool__TABLE_h87d391f6_0;
+extern const VlUnpacked<CData/*7:0*/, 256> Vtop__ConstPool__TABLE_hdf0a29a1_0;
+
 VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -45,18 +45,45 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     top__DOT__my_vga_ctrl__DOT__h_valid = 0;
     CData/*0:0*/ top__DOT__my_vga_ctrl__DOT__v_valid;
     top__DOT__my_vga_ctrl__DOT__v_valid = 0;
-    SData/*9:0*/ __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt;
-    __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 0;
-    SData/*9:0*/ __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt;
-    __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = 0;
+    CData/*7:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
+    CData/*7:0*/ __Vtableidx2;
+    __Vtableidx2 = 0;
+    CData/*7:0*/ __Vtableidx3;
+    __Vtableidx3 = 0;
     CData/*2:0*/ __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync;
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync = 0;
     CData/*3:0*/ __Vdly__top__DOT__my_keyboard__DOT__count;
     __Vdly__top__DOT__my_keyboard__DOT__count = 0;
+    CData/*2:0*/ __Vdly__top__DOT__my_keyboard__DOT__w_ptr;
+    __Vdly__top__DOT__my_keyboard__DOT__w_ptr = 0;
+    CData/*2:0*/ __Vdly__top__DOT__my_keyboard__DOT__r_ptr;
+    __Vdly__top__DOT__my_keyboard__DOT__r_ptr = 0;
+    CData/*0:0*/ __Vdly__top__DOT____Vcellout__my_keyboard__overflow;
+    __Vdly__top__DOT____Vcellout__my_keyboard__overflow = 0;
+    CData/*0:0*/ __Vdly__top__DOT____Vcellout__my_keyboard__ready;
+    __Vdly__top__DOT____Vcellout__my_keyboard__ready = 0;
+    CData/*2:0*/ __Vdlyvdim0__top__DOT__my_keyboard__DOT__fifo__v0;
+    __Vdlyvdim0__top__DOT__my_keyboard__DOT__fifo__v0 = 0;
+    CData/*7:0*/ __Vdlyvval__top__DOT__my_keyboard__DOT__fifo__v0;
+    __Vdlyvval__top__DOT__my_keyboard__DOT__fifo__v0 = 0;
+    CData/*0:0*/ __Vdlyvset__top__DOT__my_keyboard__DOT__fifo__v0;
+    __Vdlyvset__top__DOT__my_keyboard__DOT__fifo__v0 = 0;
+    SData/*9:0*/ __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt;
+    __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 0;
+    SData/*9:0*/ __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt;
+    __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = 0;
     // Body
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync 
         = vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync;
+    __Vdly__top__DOT__my_keyboard__DOT__w_ptr = vlSelf->top__DOT__my_keyboard__DOT__w_ptr;
     __Vdly__top__DOT__my_keyboard__DOT__count = vlSelf->top__DOT__my_keyboard__DOT__count;
+    __Vdly__top__DOT____Vcellout__my_keyboard__ready 
+        = vlSelf->top__DOT____Vcellout__my_keyboard__ready;
+    __Vdly__top__DOT____Vcellout__my_keyboard__overflow 
+        = vlSelf->top__DOT____Vcellout__my_keyboard__overflow;
+    __Vdly__top__DOT__my_keyboard__DOT__r_ptr = vlSelf->top__DOT__my_keyboard__DOT__r_ptr;
+    __Vdlyvset__top__DOT__my_keyboard__DOT__fifo__v0 = 0U;
     __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt = vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt;
     __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt;
     __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync 
@@ -64,30 +91,66 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
                   << 1U)) | (IData)(vlSelf->ps2_clk));
     if (vlSelf->rst) {
         __Vdly__top__DOT__my_keyboard__DOT__count = 0U;
-    } else if ((IData)((4U == (6U & (IData)(vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync))))) {
-        if ((0xaU == (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))) {
-            if (VL_UNLIKELY((((~ (IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer)) 
-                              & (IData)(vlSelf->ps2_data)) 
-                             & VL_REDXOR_32((0x1ffU 
-                                             & ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
-                                                >> 1U)))))) {
-                VL_WRITEF("receive %x\n",8,(0xffU & 
-                                            ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
-                                             >> 1U)));
+        __Vdly__top__DOT__my_keyboard__DOT__w_ptr = 0U;
+        __Vdly__top__DOT__my_keyboard__DOT__r_ptr = 0U;
+        __Vdly__top__DOT____Vcellout__my_keyboard__overflow = 0U;
+        __Vdly__top__DOT____Vcellout__my_keyboard__ready = 0U;
+    } else {
+        if (vlSelf->top__DOT____Vcellout__my_keyboard__ready) {
+            if ((1U & (~ (IData)(vlSelf->sw)))) {
+                __Vdly__top__DOT__my_keyboard__DOT__r_ptr 
+                    = (7U & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_keyboard__DOT__r_ptr)));
+                if (((IData)(vlSelf->top__DOT__my_keyboard__DOT__w_ptr) 
+                     == (7U & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_keyboard__DOT__r_ptr))))) {
+                    __Vdly__top__DOT____Vcellout__my_keyboard__ready = 0U;
+                }
             }
-            __Vdly__top__DOT__my_keyboard__DOT__count = 0U;
-        } else {
-            vlSelf->top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0 
-                = vlSelf->ps2_data;
-            if (VL_LIKELY((9U >= (IData)(vlSelf->top__DOT__my_keyboard__DOT__count)))) {
-                vlSelf->top__DOT__my_keyboard__DOT__buffer 
-                    = (((~ ((IData)(1U) << (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))) 
-                        & (IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer)) 
-                       | (0x3ffU & ((IData)(vlSelf->top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0) 
-                                    << (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))));
+        }
+        if ((IData)((4U == (6U & (IData)(vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync))))) {
+            if ((0xaU == (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))) {
+                if (VL_UNLIKELY((((~ (IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer)) 
+                                  & (IData)(vlSelf->ps2_data)) 
+                                 & VL_REDXOR_32((0x1ffU 
+                                                 & ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
+                                                    >> 1U)))))) {
+                    VL_WRITEF("receive %x\n",8,(0xffU 
+                                                & ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
+                                                   >> 1U)));
+                    if ((0xf0U == (0xffU & ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
+                                            >> 1U)))) {
+                        vlSelf->top__DOT__temp_seg_1 
+                            = (0xffU & ((IData)(1U) 
+                                        + (IData)(vlSelf->top__DOT__temp_seg_1)));
+                    }
+                    __Vdlyvval__top__DOT__my_keyboard__DOT__fifo__v0 
+                        = (0xffU & ((IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer) 
+                                    >> 1U));
+                    __Vdlyvset__top__DOT__my_keyboard__DOT__fifo__v0 = 1U;
+                    __Vdlyvdim0__top__DOT__my_keyboard__DOT__fifo__v0 
+                        = vlSelf->top__DOT__my_keyboard__DOT__w_ptr;
+                    __Vdly__top__DOT____Vcellout__my_keyboard__ready = 1U;
+                    __Vdly__top__DOT__my_keyboard__DOT__w_ptr 
+                        = (7U & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_keyboard__DOT__w_ptr)));
+                    __Vdly__top__DOT____Vcellout__my_keyboard__overflow 
+                        = ((IData)(vlSelf->top__DOT____Vcellout__my_keyboard__overflow) 
+                           | ((IData)(vlSelf->top__DOT__my_keyboard__DOT__r_ptr) 
+                              == (7U & ((IData)(1U) 
+                                        + (IData)(vlSelf->top__DOT__my_keyboard__DOT__w_ptr)))));
+                }
+                __Vdly__top__DOT__my_keyboard__DOT__count = 0U;
+            } else {
+                vlSelf->top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0 
+                    = vlSelf->ps2_data;
+                if ((9U >= (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))) {
+                    vlSelf->top__DOT__my_keyboard__DOT__buffer 
+                        = (((~ ((IData)(1U) << (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))) 
+                            & (IData)(vlSelf->top__DOT__my_keyboard__DOT__buffer)) 
+                           | (0x3ffU & ((IData)(vlSelf->top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0) 
+                                        << (IData)(vlSelf->top__DOT__my_keyboard__DOT__count))));
+                }
+                __Vdly__top__DOT__my_keyboard__DOT__count 
+                    = (0xfU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_keyboard__DOT__count)));
             }
-            __Vdly__top__DOT__my_keyboard__DOT__count 
-                = (0xfU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_keyboard__DOT__count)));
         }
     }
     if (vlSelf->rst) {
@@ -102,11 +165,34 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
         __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt = 
             (0x3ffU & ((IData)(1U) + (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)));
     }
+    vlSelf->top__DOT__temp_seg_2 = vlSelf->top__DOT__mylut__DOT__ram
+        [vlSelf->top__DOT__temp_seg_3];
     vlSelf->top__DOT__my_keyboard__DOT__count = __Vdly__top__DOT__my_keyboard__DOT__count;
+    vlSelf->top__DOT__my_keyboard__DOT__w_ptr = __Vdly__top__DOT__my_keyboard__DOT__w_ptr;
     vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync 
         = __Vdly__top__DOT__my_keyboard__DOT__ps2_clk_sync;
+    vlSelf->top__DOT____Vcellout__my_keyboard__overflow 
+        = __Vdly__top__DOT____Vcellout__my_keyboard__overflow;
+    vlSelf->top__DOT____Vcellout__my_keyboard__ready 
+        = __Vdly__top__DOT____Vcellout__my_keyboard__ready;
+    vlSelf->top__DOT__my_keyboard__DOT__r_ptr = __Vdly__top__DOT__my_keyboard__DOT__r_ptr;
+    if (__Vdlyvset__top__DOT__my_keyboard__DOT__fifo__v0) {
+        vlSelf->top__DOT__my_keyboard__DOT__fifo[__Vdlyvdim0__top__DOT__my_keyboard__DOT__fifo__v0] 
+            = __Vdlyvval__top__DOT__my_keyboard__DOT__fifo__v0;
+    }
     vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt = __Vdly__top__DOT__my_vga_ctrl__DOT__x_cnt;
     vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt = __Vdly__top__DOT__my_vga_ctrl__DOT__y_cnt;
+    vlSelf->ledr = ((0x3fffU & (IData)(vlSelf->ledr)) 
+                    | (((IData)(vlSelf->top__DOT____Vcellout__my_keyboard__ready) 
+                        << 0xfU) | ((IData)(vlSelf->top__DOT____Vcellout__my_keyboard__overflow) 
+                                    << 0xeU)));
+    __Vtableidx3 = vlSelf->top__DOT__temp_seg_1;
+    vlSelf->seg4 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx3];
+    vlSelf->seg5 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx3];
+    vlSelf->top__DOT__temp_seg_3 = vlSelf->top__DOT__my_keyboard__DOT__fifo
+        [vlSelf->top__DOT__my_keyboard__DOT__r_ptr];
     vlSelf->VGA_HSYNC = (0x60U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt));
     top__DOT__my_vga_ctrl__DOT__h_valid = ((0x90U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)) 
                                            & (0x310U 
@@ -115,6 +201,16 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     top__DOT__my_vga_ctrl__DOT__v_valid = ((0x23U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt)) 
                                            & (0x203U 
                                               >= (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt)));
+    __Vtableidx2 = vlSelf->top__DOT__temp_seg_2;
+    vlSelf->seg2 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx2];
+    vlSelf->seg3 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx2];
+    __Vtableidx1 = vlSelf->top__DOT__temp_seg_3;
+    vlSelf->seg0 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx1];
+    vlSelf->seg1 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx1];
     vlSelf->VGA_BLANK_N = ((IData)(top__DOT__my_vga_ctrl__DOT__h_valid) 
                            & (IData)(top__DOT__my_vga_ctrl__DOT__v_valid));
     top__DOT__vga_data = vlSelf->top__DOT__my_vmem__DOT__vga_mem
@@ -130,39 +226,13 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     vlSelf->VGA_B = (0xffU & top__DOT__vga_data);
 }
 
-extern const VlUnpacked<CData/*3:0*/, 64> Vtop__ConstPool__TABLE_h6fb49d84_0;
-
-VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_sequent__TOP__1\n"); );
-    // Init
-    CData/*5:0*/ __Vtableidx1;
-    __Vtableidx1 = 0;
-    // Body
-    __Vtableidx1 = ((0x20U & ((IData)(vlSelf->sw) << 5U)) 
-                    | ((0x10U & ((IData)(vlSelf->sw) 
-                                 << 3U)) | (IData)(vlSelf->top__DOT____Vcellout__mymealy__state)));
-    vlSelf->top__DOT____Vcellout__mymealy__state = 
-        Vtop__ConstPool__TABLE_h6fb49d84_0[__Vtableidx1];
-    vlSelf->ledr = ((0xfffeU & (IData)(vlSelf->ledr)) 
-                    | ((4U == (IData)(vlSelf->top__DOT____Vcellout__mymealy__state)) 
-                       | (8U == (IData)(vlSelf->top__DOT____Vcellout__mymealy__state))));
-    vlSelf->ledr = ((0xff0fU & (IData)(vlSelf->ledr)) 
-                    | ((IData)(vlSelf->top__DOT____Vcellout__mymealy__state) 
-                       << 4U));
-}
-
 void Vtop___024root___eval_nba(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_nba\n"); );
     // Body
-    if (vlSelf->__VnbaTriggered.at(1U)) {
-        Vtop___024root___nba_sequent__TOP__0(vlSelf);
-    }
     if (vlSelf->__VnbaTriggered.at(0U)) {
-        Vtop___024root___nba_sequent__TOP__1(vlSelf);
+        Vtop___024root___nba_sequent__TOP__0(vlSelf);
     }
 }
 
@@ -184,7 +254,7 @@ void Vtop___024root___eval(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval\n"); );
     // Init
     CData/*0:0*/ __VicoContinue;
-    VlTriggerVec<2> __VpreTriggered;
+    VlTriggerVec<1> __VpreTriggered;
     IData/*31:0*/ __VnbaIterCount;
     CData/*0:0*/ __VnbaContinue;
     // Body

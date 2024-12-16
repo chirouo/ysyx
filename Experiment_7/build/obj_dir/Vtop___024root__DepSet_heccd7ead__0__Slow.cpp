@@ -20,8 +20,6 @@ VL_ATTR_COLD void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
     // Body
     Vtop___024root___eval_initial__TOP(vlSelf);
-    vlSelf->__Vtrigrprev__TOP__top__DOT____Vcellinp__mymealy__clk 
-        = vlSelf->top__DOT____Vcellinp__mymealy__clk;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
 }
 
@@ -32,6 +30,7 @@ VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     // Init
     VlWide<5>/*159:0*/ __Vtemp_h146a064b__0;
     // Body
+    vlSelf->top__DOT__mylut__DOT__ram[0x1cU] = 0x41U;
     __Vtemp_h146a064b__0[0U] = 0x2e686578U;
     __Vtemp_h146a064b__0[1U] = 0x74757265U;
     __Vtemp_h146a064b__0[2U] = 0x2f706963U;
@@ -96,6 +95,9 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__stl(Vtop___024root* vlSelf) {
 }
 #endif  // VL_DEBUG
 
+extern const VlUnpacked<CData/*7:0*/, 256> Vtop__ConstPool__TABLE_h87d391f6_0;
+extern const VlUnpacked<CData/*7:0*/, 256> Vtop__ConstPool__TABLE_hdf0a29a1_0;
+
 VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -107,26 +109,44 @@ VL_ATTR_COLD void Vtop___024root___stl_sequent__TOP__0(Vtop___024root* vlSelf) {
     top__DOT__my_vga_ctrl__DOT__h_valid = 0;
     CData/*0:0*/ top__DOT__my_vga_ctrl__DOT__v_valid;
     top__DOT__my_vga_ctrl__DOT__v_valid = 0;
+    CData/*7:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
+    CData/*7:0*/ __Vtableidx2;
+    __Vtableidx2 = 0;
+    CData/*7:0*/ __Vtableidx3;
+    __Vtableidx3 = 0;
     // Body
     vlSelf->VGA_CLK = vlSelf->clk;
-    vlSelf->top__DOT____Vcellinp__mymealy__clk = (1U 
-                                                  & ((IData)(vlSelf->sw) 
-                                                     >> 3U));
     vlSelf->uart_tx = vlSelf->uart_rx;
     vlSelf->VGA_HSYNC = (0x60U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt));
     vlSelf->VGA_VSYNC = (2U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt));
-    vlSelf->ledr = ((0xfffeU & (IData)(vlSelf->ledr)) 
-                    | ((4U == (IData)(vlSelf->top__DOT____Vcellout__mymealy__state)) 
-                       | (8U == (IData)(vlSelf->top__DOT____Vcellout__mymealy__state))));
-    vlSelf->ledr = ((0xff0fU & (IData)(vlSelf->ledr)) 
-                    | ((IData)(vlSelf->top__DOT____Vcellout__mymealy__state) 
-                       << 4U));
+    vlSelf->ledr = ((0x3fffU & (IData)(vlSelf->ledr)) 
+                    | (((IData)(vlSelf->top__DOT____Vcellout__my_keyboard__ready) 
+                        << 0xfU) | ((IData)(vlSelf->top__DOT____Vcellout__my_keyboard__overflow) 
+                                    << 0xeU)));
+    __Vtableidx2 = vlSelf->top__DOT__temp_seg_2;
+    vlSelf->seg2 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx2];
+    vlSelf->seg3 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx2];
+    __Vtableidx3 = vlSelf->top__DOT__temp_seg_1;
+    vlSelf->seg4 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx3];
+    vlSelf->seg5 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx3];
+    vlSelf->top__DOT__temp_seg_3 = vlSelf->top__DOT__my_keyboard__DOT__fifo
+        [vlSelf->top__DOT__my_keyboard__DOT__r_ptr];
     top__DOT__my_vga_ctrl__DOT__h_valid = ((0x90U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)) 
                                            & (0x310U 
                                               >= (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt)));
     top__DOT__my_vga_ctrl__DOT__v_valid = ((0x23U < (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt)) 
                                            & (0x203U 
                                               >= (IData)(vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt)));
+    __Vtableidx1 = vlSelf->top__DOT__temp_seg_3;
+    vlSelf->seg0 = Vtop__ConstPool__TABLE_h87d391f6_0
+        [__Vtableidx1];
+    vlSelf->seg1 = Vtop__ConstPool__TABLE_hdf0a29a1_0
+        [__Vtableidx1];
     vlSelf->VGA_BLANK_N = ((IData)(top__DOT__my_vga_ctrl__DOT__h_valid) 
                            & (IData)(top__DOT__my_vga_ctrl__DOT__v_valid));
     top__DOT__vga_data = vlSelf->top__DOT__my_vmem__DOT__vga_mem
@@ -177,10 +197,7 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__act(Vtop___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VactTriggered.at(0U)) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge top.__Vcellinp__mymealy__clk)\n");
-    }
-    if (vlSelf->__VactTriggered.at(1U)) {
-        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge clk)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -195,10 +212,7 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__nba(Vtop___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VnbaTriggered.at(0U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge top.__Vcellinp__mymealy__clk)\n");
-    }
-    if (vlSelf->__VnbaTriggered.at(1U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge clk)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -232,17 +246,27 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
-    vlSelf->top__DOT____Vcellout__mymealy__state = 0;
-    vlSelf->top__DOT____Vcellinp__mymealy__clk = 0;
-    vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt = 0;
-    vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt = 0;
+    vlSelf->top__DOT__temp_seg_1 = 0;
+    vlSelf->top__DOT__temp_seg_2 = 0;
+    vlSelf->top__DOT__temp_seg_3 = 0;
+    vlSelf->top__DOT____Vcellout__my_keyboard__overflow = 0;
+    vlSelf->top__DOT____Vcellout__my_keyboard__ready = 0;
     vlSelf->top__DOT__my_keyboard__DOT__buffer = 0;
+    for (int __Vi0 = 0; __Vi0 < 8; ++__Vi0) {
+        vlSelf->top__DOT__my_keyboard__DOT__fifo[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__my_keyboard__DOT__w_ptr = 0;
+    vlSelf->top__DOT__my_keyboard__DOT__r_ptr = 0;
     vlSelf->top__DOT__my_keyboard__DOT__count = 0;
     vlSelf->top__DOT__my_keyboard__DOT__ps2_clk_sync = 0;
     vlSelf->top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0 = 0;
+    for (int __Vi0 = 0; __Vi0 < 256; ++__Vi0) {
+        vlSelf->top__DOT__mylut__DOT__ram[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__my_vga_ctrl__DOT__x_cnt = 0;
+    vlSelf->top__DOT__my_vga_ctrl__DOT__y_cnt = 0;
     for (int __Vi0 = 0; __Vi0 < 524288; ++__Vi0) {
         vlSelf->top__DOT__my_vmem__DOT__vga_mem[__Vi0] = 0;
     }
-    vlSelf->__Vtrigrprev__TOP__top__DOT____Vcellinp__mymealy__clk = 0;
     vlSelf->__Vtrigrprev__TOP__clk = 0;
 }

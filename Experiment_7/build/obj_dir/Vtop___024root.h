@@ -14,7 +14,6 @@ class Vtop___024root final : public VerilatedModule {
 
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
-    CData/*0:0*/ top__DOT____Vcellinp__mymealy__clk;
     VL_IN8(rst,0,0);
     VL_IN8(btn,4,0);
     VL_IN8(ps2_clk,0,0);
@@ -36,26 +35,33 @@ class Vtop___024root final : public VerilatedModule {
     VL_OUT8(seg5,7,0);
     VL_OUT8(seg6,7,0);
     VL_OUT8(seg7,7,0);
-    CData/*3:0*/ top__DOT____Vcellout__mymealy__state;
+    CData/*7:0*/ top__DOT__temp_seg_1;
+    CData/*7:0*/ top__DOT__temp_seg_2;
+    CData/*7:0*/ top__DOT__temp_seg_3;
+    CData/*0:0*/ top__DOT____Vcellout__my_keyboard__overflow;
+    CData/*0:0*/ top__DOT____Vcellout__my_keyboard__ready;
+    CData/*2:0*/ top__DOT__my_keyboard__DOT__w_ptr;
+    CData/*2:0*/ top__DOT__my_keyboard__DOT__r_ptr;
     CData/*3:0*/ top__DOT__my_keyboard__DOT__count;
     CData/*2:0*/ top__DOT__my_keyboard__DOT__ps2_clk_sync;
     CData/*0:0*/ top__DOT__my_keyboard__DOT____Vlvbound_h1a91ade8__0;
-    CData/*0:0*/ __Vtrigrprev__TOP__top__DOT____Vcellinp__mymealy__clk;
     CData/*0:0*/ __Vtrigrprev__TOP__clk;
     CData/*0:0*/ __VactContinue;
     VL_IN16(sw,15,0);
     VL_OUT16(ledr,15,0);
+    SData/*9:0*/ top__DOT__my_keyboard__DOT__buffer;
     SData/*9:0*/ top__DOT__my_vga_ctrl__DOT__x_cnt;
     SData/*9:0*/ top__DOT__my_vga_ctrl__DOT__y_cnt;
-    SData/*9:0*/ top__DOT__my_keyboard__DOT__buffer;
     IData/*31:0*/ __VstlIterCount;
     IData/*31:0*/ __VicoIterCount;
     IData/*31:0*/ __VactIterCount;
+    VlUnpacked<CData/*7:0*/, 8> top__DOT__my_keyboard__DOT__fifo;
+    VlUnpacked<CData/*7:0*/, 256> top__DOT__mylut__DOT__ram;
     VlUnpacked<IData/*23:0*/, 524288> top__DOT__my_vmem__DOT__vga_mem;
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<1> __VicoTriggered;
-    VlTriggerVec<2> __VactTriggered;
-    VlTriggerVec<2> __VnbaTriggered;
+    VlTriggerVec<1> __VactTriggered;
+    VlTriggerVec<1> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;
