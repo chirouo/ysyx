@@ -77,7 +77,7 @@ static int cmd_x(char *args){
   sscanf(expr,"%x",&addr);
   Log("debug ---------- n: '%s'\n", n);
   Log("debug ---------- expr: '%s'\n", expr);
-  Log("debug ---------- addr: '%d'\n", addr);
+  Log("debug ---------- addr: '0x%x'\n", addr);
   int num_n = atoi(n);
   for(int i = 0; i < num_n; i ++){
     printf("$%d = %d\n", i, paddr_read(addr + i * 4, 4));
