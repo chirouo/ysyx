@@ -57,17 +57,17 @@ static int cmd_si(char *args){
   if (args == NULL) args = "1";
   int step = atoi(args);
   cpu_exec(step);
+  Log("debug ---------- '%s'\n", args);
   return 0;
 }
 static int cmd_info(char *args){
   char *subcmd = args;
   Log("debug ---------- '%s'\n", subcmd);
-  // if (strcmp(args,"r")==0){
-  //   for(int i = 0; i < MUXDEF(CONFIG_RVE, 16, 32); ++ i) 
-  //   {
-  //     Log("x%d: " FMT_WORD, i, cpu.gpr[i]);
-  //   }
-  // }
+  if (strcmp(subcmd,"r")==0){
+    isa_reg_display();
+  }else if (strcmp(subcmd,"w")==0){
+    // isa_wp_display();
+  }
   return 0;
 }
 static int cmd_x(char *args){
