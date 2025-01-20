@@ -74,8 +74,9 @@ static int cmd_x(char *args){
   char *n = strtok(args, " ");
   char *expr = n + strlen(n) + 1;
   uint32_t addr = atoi(expr);
-  Log("debug ---------- '%s'\n", n);
-  Log("debug ---------- '%s'\n", expr);
+  Log("debug ---------- n: '%s'\n", n);
+  Log("debug ---------- expr: '%s'\n", expr);
+  Log("debug ---------- addr: '%d'\n", addr);
   int num_n = atoi(n);
   for(int i = 0; i < num_n; i ++){
     printf("$%d = %d\n", i, paddr_read(addr + i * 4, 4));
