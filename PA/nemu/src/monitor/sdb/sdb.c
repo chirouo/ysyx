@@ -73,9 +73,13 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   char *n = strtok(args, " ");
   char *expr = n + strlen(n) + 1;
-  // uint32_t addr = atoi(expr);
+  uint32_t addr = atoi(expr);
   Log("debug ---------- '%s'\n", n);
   Log("debug ---------- '%s'\n", expr);
+  int num_n = atoi(n);
+  for(int i = 0; i < num_n; i ++){
+    printf("$%d = %d\n", i, addr_read(addr + i * 4, 4));
+  }
   return 0;
 }
 static int cmd_p(char *args){
