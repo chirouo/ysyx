@@ -73,7 +73,7 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   char *n = strtok(args, " ");
   char *expr = n + strlen(n) + 1;
-  uint32_t addr = atoi(expr);
+  uint32_t addr = strtol(expr, NULL, 16);
   Log("debug ---------- n: '%s'\n", n);
   Log("debug ---------- expr: '%s'\n", expr);
   Log("debug ---------- addr: '%d'\n", addr);
