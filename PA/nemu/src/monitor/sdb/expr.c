@@ -152,13 +152,16 @@ static bool make_token(char *e) {
 }
 
 
-static bool check_parentheses(int p, int q) {
+static int check_parentheses(int p, int q) {
+  if (tokens[p].type != '(' || tokens[q].type != ')') {
+    return 2;
+  }
   int count = 0;
   for(int i = p; i <= q; i ++) {
     if(tokens[i].type == '(') count ++;
     if(tokens[i].type == ')') count --;
   }
-  return count == 0;
+  return count == 0 ? 0 : 1;
 }
 static int get_main_operator(int p, int q, char *op) {
   for(int i = p; i <= q; i ++) {
@@ -181,6 +184,17 @@ static int get_main_operator(int p, int q, char *op) {
   }
   return -1;
 }
+static int get_operator(int p, int q, char *op) {
+  int index = -1;
+  for(int i = p; i <= q; i ++) {
+    if(tokens[i].type == '(') {
+      continue;
+    }else{
+      index = get_main_operator(i, q, op);
+    }
+  }
+  return index;
+}
 
 /*进入这个计算函数之前，寄存器和地址中的值都已经被计算出来了, 因此这里只有十进制的数字*/
 static word_t eval(int p, int q) {
@@ -196,25 +210,30 @@ static word_t eval(int p, int q) {
      */
     return atoi(tokens[p].str);
   }
-  else if (check_parentheses(p, q) == true) {
+  else {
+    int solution = check_parentheses(p, q);
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    return eval(p + 1, q - 1);
-  }
-  else {
-    char op_type;
-    int op = get_main_operator(p, q, &op_type);
-    word_t val1 = eval(p, op - 1);
-    word_t val2 = eval(op + 1, q);
-    printf("val1 = %d, val2 = %d\n", val1, val2);
-    switch (op_type) {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
-      default: assert(0);
-    }
+      if(solution == 0) {
+      return eval(p + 1, q - 1);
+      }else if (solution == 2) {
+        char op_type;
+        int op = get_operator(p, q, &op_type);
+        word_t val1 = eval(p, op - 1);
+        word_t val2 = eval(op + 1, q);
+        printf("val1 = %d, val2 = %d\n", val1, val2);
+        switch (op_type) {
+          case '+': return val1 + val2;
+          case '-': return val1 - val2;
+          case '*': return val1 * val2;
+          case '/': return val1 / val2;
+          default: assert(0);
+        }
+      }else{
+        Log("debug----expr->eval: parentheses not matched");
+        return 0;
+      }
   }
 }
 word_t expr(char *e, bool *success) {
