@@ -49,10 +49,58 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+  nemu_state.state=NEMU_QUIT;
   return -1;
 }
 
+static int cmd_si(char *args){
+  if (args == NULL) args = "1";
+  int step = atoi(args);
+  Log("debug ---------- '%s'\n", args);
+  cpu_exec(step);
+  return 0;
+}
+static int cmd_info(char *args){
+  char *subcmd = args;
+  Log("debug ---------- '%s'\n", subcmd);
+  if (strcmp(subcmd,"r")==0){
+    isa_reg_display();
+  }else if (strcmp(subcmd,"w")==0){
+    // isa_wp_display();
+  }
+  return 0;
+}
+static int cmd_x(char *args){
+  char *n = strtok(args, " ");
+  char *expr = n + strlen(n) + 1;
+  uint32_t addr = 0;
+  sscanf(expr,"%x",&addr);
+  Log("debug ---------- n: '%s'\n", n);
+  Log("debug ---------- expr: '%s'\n", expr);
+  Log("debug ---------- addr: '0x%x'\n", addr);
+  int num_n = atoi(n);
+  for(int i = 0; i < num_n; i ++){
+    printf("$%d = %d\n", i, paddr_read(addr + i * 4, 4));
+  }
+  return 0;
+}
+static int cmd_p(char *args){
+  char *expr = args;
+  Log("debug ---------- '%s'\n", expr);
+  return 0;
+}
+static int cmd_w(char *args){
+  char *expr = args;
+  Log("debug ---------- '%s'\n", expr);
+  return 0;
+}
+static int cmd_d(char *args){
+  char *n = args;
+  Log("debug ---------- '%s'\n", n);
+  return 0;
+}
 static int cmd_help(char *args);
+
 
 static struct {
   const char *name;
@@ -62,7 +110,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  {"si","Step any instruction",cmd_si},
+  {"info","Display register or watchpoint",cmd_info},
+  {"x","Display N bytes of memory beginning at address $expr",cmd_x},
+  {"p","Print the value of $expr",cmd_p},
+  {"w","Stop program when $expr is changed",cmd_w},
+  {"d","Delete watchpoint $N",cmd_d}
   /* TODO: Add more commands */
 
 };
@@ -108,6 +161,7 @@ void sdb_mainloop() {
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
     if (cmd == NULL) { continue; }
+    Log("debug ---------- '%s'\n", cmd);
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
@@ -125,7 +179,9 @@ void sdb_mainloop() {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { return; }
+        if (cmd_table[i].handler(args) < 0) { 
+            return; 
+        }
         break;
       }
     }
