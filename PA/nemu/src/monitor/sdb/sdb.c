@@ -87,10 +87,9 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   char *expr_str = args;
   Log("debug ---------- '%s'\n", expr_str);
-  bool *success = malloc(sizeof(bool));
-  *success = true;
-  word_t result = expr(expr_str, success);
-  if(*success == false) {
+  bool success = true;
+  word_t result = expr(expr_str, &success);
+  if(success == false) {
     Log("debug ---------- '%s' is not a valid expression\n", expr_str);
     return 0;
   }
