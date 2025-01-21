@@ -85,8 +85,18 @@ static int cmd_x(char *args){
   return 0;
 }
 static int cmd_p(char *args){
-  char *expr = args;
-  Log("debug ---------- '%s'\n", expr);
+  char *expr_str = args;
+  Log("debug ---------- '%s'\n", expr_str);
+  bool *success = malloc(sizeof(bool));
+  *success = false;
+  expr(expr_str, success);
+  if(*success == false) {
+    Log("debug ---------- '%s' is not a valid expression\n", expr_str);
+    return 0;
+  }
+  // for(int i = 0; i < nr_token; i ++) {
+  //   printf("number %d token\ttoken_type%d\ttoken_str:%s\n", i, tokens[i].type, tokens[i].str);
+  // }
   return 0;
 }
 static int cmd_w(char *args){

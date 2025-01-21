@@ -19,9 +19,15 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
+ 
+const char *regs_t[] = {
+  "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+  "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
+  "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
+  "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
+};
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG,
 
   /* TODO: Add more token types */
 
@@ -39,8 +45,26 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+  {"[0-9]+", TK_NUM},   // number
+  {"0x[0-9a-fA-F]+", TK_ADDR}, // hex number
+  {"\\(", '('},        // left parenthesis
+  {"\\)", ')'},        // right parenthesis
+  {"\\*", '*'},        // multiply
+  {"\\/", '/'},        // divide
+  {"\\%", '%'},        // modulo
+  {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
 };
-
+bool is_reg(char *s) {
+  if(s[0] == '$') {
+    s = s + 1;
+    for(int i = 0; i < 32; i ++) {
+      if(strcmp(s, regs_t[i]) == 0) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 #define NR_REGEX ARRLEN(rules)
 
 static regex_t re[NR_REGEX] = {};
@@ -95,7 +119,33 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
+          case TK_EQ:
+            tokens[nr_token].type = rules[i].token_type;
+            break;
+          case TK_NUM:
+            tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            break;
+          case TK_ADDR:
+            tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            break;
+          case TK_REG:
+            if(is_reg(substr_start)) {
+              tokens[nr_token].type = rules[i].token_type;
+              strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
+            }
+            break;
+          case TK_NOTYPE: 
+          case '+':
+          case '(':
+          case ')':
+          case '*':
+          case '/':
+          case '%':
+            tokens[nr_token].type = rules[i].token_type;
+            break;
+          default: //todo();
         }
 
         break;
@@ -119,7 +169,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  //TODO();
 
   return 0;
 }
