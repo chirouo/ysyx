@@ -20,12 +20,6 @@
  */
 #include <regex.h>
  
-const char *regs_t[] = {
-  "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
-  "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
-  "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
-  "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
-};
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG,
 
@@ -54,17 +48,7 @@ static struct rule {
   {"\\%", '%'},        // modulo
   {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
 };
-bool is_reg(char *s) {
-  if(s[0] == '$') {
-    s = s + 1;
-    for(int i = 0; i < 32; i ++) {
-      if(strcmp(s, regs_t[i]) == 0) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
+
 #define NR_REGEX ARRLEN(rules)
 
 static regex_t re[NR_REGEX] = {};
@@ -131,10 +115,14 @@ static bool make_token(char *e) {
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             break;
           case TK_REG:
-            if(is_reg(substr_start)) {
-              tokens[nr_token].type = rules[i].token_type;
-              strncpy(tokens[nr_token].str, substr_start + 1, substr_len - 1);
-            }
+            bool get_reg_value = false;
+            char str[12];//2^32 - 1最多是4294967295,加上\0最多11个字符
+            char reg_name[4];
+            strncpy(reg_name, substr_start + 1, substr_len);
+            word_t reg_val = isa_reg_str2val(reg_name, &get_reg_value);
+            sprintf(str, "%d", reg_val);
+            tokens[nr_token].type = rules[i].token_type;
+            strcpy(tokens[nr_token].str, str);
             break;
           case TK_NOTYPE: 
           case '+':
@@ -162,6 +150,71 @@ static bool make_token(char *e) {
 }
 
 
+static bool check_parentheses(int p, int q) {
+  int count = 0;
+  for(int i = p; i <= q; i ++) {
+    if(tokens[i].type == '(') count ++;
+    if(tokens[i].type == ')') count --;
+  }
+  return count == 0;
+}
+static int get_main_operator(int p, int q, char *op) {
+  for(int i = p; i <= q; i ++) {
+    if(tokens[i].type == '+') {
+      *op = '+';
+      return i;
+    }
+    if(tokens[i].type == '-') {
+      *op = '-';
+      return i;
+    }
+    if(tokens[i].type == '*') {
+      *op = '*';
+      return i;
+    }
+    if(tokens[i].type == '/') {
+      *op = '/';
+      return i;
+    }
+  }
+  return -1;
+}
+
+/*进入这个计算函数之前，寄存器和地址中的值都已经被计算出来了, 因此这里只有十进制的数字*/
+static word_t eval(int p, int q) {
+  if (p > q) {
+    /* Bad expression */
+    Log("debug----expr->eval: Bad expression");
+    assert(0);
+  }
+  else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    return atoi(tokens[p].str);
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+    char op_type;
+    int op = get_main_operator(p, q, &op_type);
+    word_t val1 = eval(p, op - 1);
+    word_t val2 = eval(op + 1, q);
+
+    switch (op_type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
+    }
+  }
+}
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -170,6 +223,5 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-
-  return 0;
+  return eval(0, nr_token - 1);
 }

@@ -18,6 +18,7 @@
 
 #include <common.h>
 // #include "expr.c"
-/*By GX*/#include "memory/paddr.h"
+/*By GX*/
+#include "memory/paddr.h"
 word_t expr(char *e, bool *success);
 #endif
