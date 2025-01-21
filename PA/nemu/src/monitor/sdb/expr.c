@@ -46,7 +46,7 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
   {"[0-9]+", TK_NUM},   // number
-  {"0x[0-9a-fA-F]+", TK_ADDR}, // hex number
+  {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
   {"\\(", '('},        // left parenthesis
   {"\\)", ')'},        // right parenthesis
   {"\\*", '*'},        // multiply
