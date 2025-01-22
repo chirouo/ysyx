@@ -131,7 +131,8 @@ static bool make_token(char *e) {
           case '!': 
             tokens[nr_token].type = rules[i].token_type;
           case TK_NOTYPE:
-          break;
+            nr_token --;
+            break;
           case '+':
           case '(':
           case ')':
