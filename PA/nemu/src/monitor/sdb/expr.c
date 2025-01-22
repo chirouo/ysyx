@@ -21,7 +21,7 @@
 #include <regex.h>
  
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG,
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR
 
   /* TODO: Add more token types */
 
@@ -37,15 +37,19 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
-  {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
   {"[0-9]+", TK_NUM},   // number
+  {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
   {"\\(", '('},        // left parenthesis
   {"\\)", ')'},        // right parenthesis
-  {"\\*", '*'},        // multiply
+  {"&&", TK_AND},         // plus
+  {"\\|\\|", TK_OR},         // plus
+  {"\\+", '+'},         // plus
+  {"\\-", '-'},         // plus
+  {"\\*", '*'},       // multiply
   {"\\/", '/'},        // divide
   {"\\%", '%'},        // modulo
+  {"!", '!'},          // 
   {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
 };
 
@@ -125,6 +129,8 @@ static bool make_token(char *e) {
             tokens[nr_token].type = rules[i].token_type;
             strcpy(tokens[nr_token].str, str);
             break;
+          case '!': 
+            tokens[nr_token].type = rules[i].token_type;
           case TK_NOTYPE:
           break;
           case '+':
@@ -153,51 +159,61 @@ static bool make_token(char *e) {
 
 
 static int check_parentheses(int p, int q) {
-  if (tokens[p].type != '(' || tokens[q].type != ')') {
-    return 2;
+  if (tokens[p].type == '(' || tokens[q].type == ')') {
+    int count = 0;
+    for(int i = p; i <= q; i ++) {
+      if(tokens[i].type == '(') count ++;
+      if(tokens[i].type == ')') count --;
+    }
+    return count == 0 ? 0 : 1;
   }
+  return false;
+}
+static int get_main_operator(int p, int q) {
   int count = 0;
+  int index = 0;
+  int pri = 0;
   for(int i = p; i <= q; i ++) {
-    if(tokens[i].type == '(') count ++;
-    if(tokens[i].type == ')') count --;
-  }
-  return count == 0 ? 0 : 1;
-}
-static int get_main_operator(int p, int q, char *op) {
-  for(int i = p; i <= q; i ++) {
-    if(tokens[i].type == '+') {
-      *op = '+';
-      return i;
+    if(tokens[i].type == '('){
+      count ++;
     }
-    if(tokens[i].type == '-') {
-      *op = '-';
-      return i;
+    if(tokens[i].type == ')'){
+      count --;
     }
-    if(tokens[i].type == '*') {
-      *op = '*';
-      return i;
-    }
-    if(tokens[i].type == '/') {
-      *op = '/';
-      return i;
-    }
-  }
-  return -1;
-}
-static int get_operator(int p, int q, char *op) {
-  int index = -1;
-  for(int i = p; i <= q; i ++) {
-    if(tokens[i].type == '(') {
-      continue;
-    }else{
-      index = get_main_operator(i, q, op);
+    if(count == 0){
+      if(tokens[i].type == TK_OR){
+        if(pri < 10){
+          index = i;
+          pri = 10;
+        }
+      }
+      if(tokens[i].type == TK_AND){
+        if(pri < 9){
+          index = i;
+          pri = 9;
+        }
+      }
+      if(tokens[i].type == '+' || tokens[i].type == '-') {
+        if(pri < 8){
+          index = i;
+          pri = 8;
+        }
+      }
+      if(tokens[i].type == '*' || tokens[i].type == '/') {
+        if(pri < 7){
+          index = i;
+          pri = 7;
+        }
+      }
     }
   }
-  return index;
+  if(count != 0) return -2;
+  else return index;
 }
 
 /*进入这个计算函数之前，寄存器和地址中的值都已经被计算出来了, 因此这里只有十进制的数字*/
 static word_t eval(int p, int q) {
+  int result = 0;
   if (p > q) {
     /* Bad expression */
     Log("debug----expr->eval: Bad expression");
@@ -208,33 +224,35 @@ static word_t eval(int p, int q) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(tokens[p].str);
+    sscanf(tokens[p].str, "%d", &result);
+    return result;
   }
-  else {
-    int solution = check_parentheses(p, q);
+  else if(check_parentheses(p, q)) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-      if(solution == 0) {
       return eval(p + 1, q - 1);
-      }else if (solution == 2) {
-        char op_type;
-        int op = get_operator(p, q, &op_type);
-        word_t val1 = eval(p, op - 1);
-        word_t val2 = eval(op + 1, q);
-        printf("val1 = %d, val2 = %d\n", val1, val2);
-        switch (op_type) {
-          case '+': return val1 + val2;
-          case '-': return val1 - val2;
-          case '*': return val1 * val2;
-          case '/': return val1 / val2;
-          default: assert(0);
-        }
-      }else{
-        Log("debug----expr->eval: parentheses not matched");
-        return 0;
+    }else {
+      int op = get_main_operator(p, q);
+      if(op == -2) {
+        Log("debug----expr->eval: parentheses didnt == 2x");
+        assert(0);
       }
-  }
+      word_t val1 = eval(p, op - 1);
+      word_t val2 = eval(op + 1, q);
+      printf("val1 = %d, val2 = %d\n", val1, val2);
+      
+      switch (tokens[op].type) {
+        case '+': return val1 + val2;
+        case '-': return val1 - val2;
+        case '*': return val1 * val2;
+        case '/': return val1 / val2;
+        case TK_AND: return val1 && val2;
+        case TK_OR: return val1 || val2;
+        case TK_EQ: return val1 == val2 ? 1 : 0;
+        default: assert(0);
+      }
+    }
 }
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
