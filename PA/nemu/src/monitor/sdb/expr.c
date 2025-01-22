@@ -157,14 +157,14 @@ static bool make_token(char *e) {
 }
 
 
-static int check_parentheses(int p, int q) {
+static bool check_parentheses(int p, int q) {
   if (tokens[p].type == '(' || tokens[q].type == ')') {
     int count = 0;
     for(int i = p; i <= q; i ++) {
       if(tokens[i].type == '(') count ++;
       if(tokens[i].type == ')') count --;
     }
-    return count == 0 ? 0 : 1;
+    return count == 0 ? true : false;
   }
   return false;
 }
