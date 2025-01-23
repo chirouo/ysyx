@@ -254,7 +254,9 @@ static word_t eval(int p, int q) {
         case '/': return val1 / val2;
         case TK_AND: return val1 && val2;
         case TK_OR: return val1 || val2;
-        case TK_EQ: return val1 == val2 ? 1 : 0;
+        case TK_EQ: 
+          printf("val1 = %d, val2 = %d\n", val1, val2);
+          return val1 == val2 ? 1 : 0;
         default:  Log("debug----expr->eval: switch tokens[op].type error"); assert(0);
       }
     }
