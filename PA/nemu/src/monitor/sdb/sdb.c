@@ -18,7 +18,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-
 static int is_batch_mode = false;
 
 void init_regex();
@@ -109,6 +108,16 @@ static int cmd_d(char *args){
   Log("debug ---------- '%s'\n", n);
   return 0;
 }
+static int cmd_set_reg(char *args){
+  char *n = args;
+  Log("debug ---------- '%s'\n", n);
+  bool success = false;
+  word_t val = isa_reg_str2val(n, &success);
+  if(success) {
+    set_reg_value(n, val);
+  }
+  return 0;
+}
 static int cmd_help(char *args);
 
 
@@ -125,7 +134,8 @@ static struct {
   {"x","Display N bytes of memory beginning at address $expr",cmd_x},
   {"p","Print the value of $expr",cmd_p},
   {"w","Stop program when $expr is changed",cmd_w},
-  {"d","Delete watchpoint $N",cmd_d}
+  {"d","Delete watchpoint $N",cmd_d},
+  {"sr","Set the value of $reg",cmd_set_reg}
   /* TODO: Add more commands */
 
 };

@@ -17,6 +17,7 @@
 #define __SDB_H__
 
 #include <common.h>
+#include "../../isa/riscv32/local-include/reg.h"
 // #include "expr.c"
 /*By GX*/
 #include "memory/paddr.h"
