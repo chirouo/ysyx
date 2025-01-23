@@ -19,7 +19,8 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
- 
+/*gx 添加paddr.h*/
+#include "memory/paddr.h"
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR
 
@@ -115,8 +116,12 @@ static bool make_token(char *e) {
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             break;
           case TK_ADDR:
+            u_int32_t address_hex = 0;
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
+            sscanf(tokens[nr_token].str, "%x", &address_hex);
+            word_t addr_val = paddr_read(sscanf(substr_start, "%x", &addr_val), 4);
+            sprintf(tokens[nr_token].str, "%d", addr_val);
             break;
           case TK_REG:
             bool get_reg_value = false;
