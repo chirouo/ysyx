@@ -262,8 +262,10 @@ static word_t eval(int p, int q) {
         case TK_AND: return val1 && val2;
         case TK_OR: return val1 || val2;
         case TK_EQ: 
+          Log("debug----expr->eval: TK_EQ");
           return val1 == val2 ? 1 : 0;
         case TK_NE:
+          Log("debug----expr->eval: TK_NE");
           return val1 != val2 ? 1 : 0;
         default:  Log("debug----expr->eval: switch tokens[op].type error"); assert(0);
       }
