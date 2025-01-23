@@ -22,7 +22,7 @@
 /*gx 添加paddr.h*/
 #include "memory/paddr.h"
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR
+  TK_NOTYPE = 256, TK_EQ, TK_NE, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR
 
   /* TODO: Add more token types */
 
@@ -39,6 +39,7 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
+  {"!=", TK_NE},        // not equal
   {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
   {"[0-9]+", TK_NUM},   // number
   {"\\(", '('},        // left parenthesis
@@ -208,6 +209,12 @@ static int get_main_operator(int p, int q) {
         if(pri < 7){
           index = i;
           pri = 7;
+        }
+      }
+      if(tokens[i].type == TK_EQ || tokens[i].type == TK_NE){
+        if(pri < 6){
+          index = i;
+          pri = 6;
         }
       }
     }
