@@ -116,9 +116,9 @@ static bool make_token(char *e) {
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             break;
           case TK_ADDR:
-            u_int32_t address_hex = 0;
+            paddr_t address_hex = 0;
             tokens[nr_token].type = rules[i].token_type;
-            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            strncpy(tokens[nr_token].str, substr_start+2, substr_len-2);
             sscanf(tokens[nr_token].str, "%x", &address_hex);
             word_t addr_val = paddr_read(sscanf(substr_start, "%x", &addr_val), 4);
             sprintf(tokens[nr_token].str, "%d", addr_val);

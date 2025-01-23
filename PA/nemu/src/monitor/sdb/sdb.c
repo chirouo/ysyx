@@ -73,7 +73,7 @@ static int cmd_x(char *args){
   char *n = strtok(args, " ");
   char *expr = n + strlen(n) + 1;
   uint32_t addr = 0;
-  sscanf(expr,"%x",&addr);
+  sscanf(expr+2,"%x",&addr);
   Log("debug ---------- n: '%s'\n", n);
   Log("debug ---------- expr: '%s'\n", expr);
   Log("debug ---------- addr: '0x%x'\n", addr);
