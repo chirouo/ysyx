@@ -120,7 +120,7 @@ static bool make_token(char *e) {
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start+2, substr_len-2);
             sscanf(tokens[nr_token].str, "%x", &address_hex);
-            word_t addr_val = paddr_read(sscanf(substr_start, "%x", &addr_val), 4);
+            word_t addr_val = paddr_read(address_hex, 4);
             sprintf(tokens[nr_token].str, "%d", addr_val);
             break;
           case TK_REG:
