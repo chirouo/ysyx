@@ -109,10 +109,13 @@ static int cmd_d(char *args){
   return 0;
 }
 static int cmd_set_reg(char *args){
-  char *n = args;
+  word_t val = 0;
+  char *n = strtok(args, " ");
+  char *val_str = n + strlen(n) + 1;
+  sscanf(val_str, "%d", &val);
   Log("debug ---------- '%s'\n", n);
   bool success = false;
-  word_t val = isa_reg_str2val(n, &success);
+  isa_reg_str2val(n, &success);
   if(success) {
     set_reg_value(n, val);
   }
