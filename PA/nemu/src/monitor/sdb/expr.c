@@ -38,8 +38,8 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
-  {"[0-9]+", TK_NUM},   // number
   {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
+  {"[0-9]+", TK_NUM},   // number
   {"\\(", '('},        // left parenthesis
   {"\\)", ')'},        // right parenthesis
   {"&&", TK_AND},         // plus
