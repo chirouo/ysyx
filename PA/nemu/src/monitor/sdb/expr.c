@@ -251,7 +251,7 @@ static word_t eval(int p, int q, bool * success) {
   if (p > q) {
     /* Bad expression */
     Log("debug----expr->eval: Bad expression");
-    assert(0);
+    return 0;
   }
   else if (p == q) {
     /* Single token.
@@ -267,19 +267,22 @@ static word_t eval(int p, int q, bool * success) {
      */
       return eval(p + 1, q - 1, success);
     }else {
+      word_t val1, val2;
       int op = get_main_operator(p, q);
       if(tokens[op].type == '!'){
-        return !eval(op + 1, q, success);
+        val1 = eval(p, op - 1, success);
+        val2 = !eval(op + 1, q, success);
       }
       if(tokens[op].type == TK_NEGATIVE){
-        return -eval(op + 1, q, success);
+        val1 = eval(p, op - 1, success);
+        val2 = -eval(op + 1, q, success);
       }
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
         assert(0);
       }
-      word_t val1 = eval(p, op - 1, success);
-      word_t val2 = eval(op + 1, q, success);
+      val1 = eval(p, op - 1, success);
+      val2 = eval(op + 1, q, success);
       printf("val1 = %d, val2 = %d\n", val1, val2);
       
       switch (tokens[op].type) {
