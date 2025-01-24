@@ -80,8 +80,8 @@ static int cmd_x(char *args){
   int num_n = atoi(n);
   int addr_to_read = 0;
   for(int i = 0; i < num_n; i ++){
-    if(i % 4 == 0) printf("0x%x:", addr_to_read);
     addr_to_read = addr + i * 4;
+    if(i % 4 == 0) printf("0x%x:", addr_to_read);
     printf("\t0x%-10x", paddr_read(addr_to_read, 4));
     if(i % 4 == 0) printf("\n");
   }
