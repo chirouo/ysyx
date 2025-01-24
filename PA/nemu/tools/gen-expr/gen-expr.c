@@ -21,6 +21,7 @@
 #include <string.h>
 
 // this should be enough
+static int len = 0;
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
@@ -30,9 +31,32 @@ static char *code_format =
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
-
+static void gen(char c) {
+  int used = sprintf(buf + len, "%c", c);
+  len += used;
+  // printf("char ---- %d\n", used);
+}
+static int gen_num() {
+  unsigned num = rand() % 100;
+  int used = sprintf(buf + len, "%d", num);
+  // printf("num:%d ---- %d\n", num,used);
+  len += used;
+}
+static void gen_rand_op() {
+  switch (rand() % 4) {
+    case 0: gen('+'); break;
+    case 1: gen('-'); break;
+    case 2: gen('*'); break;
+    case 3: gen('/'); break;
+  }
+}
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  if(len > 63340) return;//2 + 1 + 2
+  switch (rand() % 3) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
