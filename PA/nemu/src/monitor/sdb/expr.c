@@ -197,7 +197,7 @@ static int get_main_operator(int p, int q) {
       count --;
     }
     if(count == 0){
-      if(tokens[i].type == TK_NE){
+      if(tokens[i].type == '!'){
         if(pri <= 11){
           index = i;
           pri = 11;
