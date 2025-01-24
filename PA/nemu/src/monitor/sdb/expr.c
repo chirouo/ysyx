@@ -227,7 +227,7 @@ static int get_main_operator(int p, int q) {
 }
 
 /*进入这个计算函数之前，寄存器和地址中的值都已经被计算出来了, 因此这里只有十进制的数字*/
-static word_t eval(int p, int q) {
+static word_t eval(int p, int q, bool * success) {
   int result = 0;
   if (p > q) {
     /* Bad expression */
@@ -246,20 +246,20 @@ static word_t eval(int p, int q) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-      return eval(p + 1, q - 1);
+      return eval(p + 1, q - 1, success);
     }else {
       int op = get_main_operator(p, q);
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
         assert(0);
       }
-      word_t val1 = eval(p, op - 1);
-      word_t val2 = eval(op + 1, q);
+      word_t val1 = eval(p, op - 1, success);
+      word_t val2 = eval(op + 1, q, success);
       printf("val1 = %d, val2 = %d\n", val1, val2);
       
       switch (tokens[op].type) {
         case '+': return val1 + val2;
-        case '-': return val1 - val2;
+        case '-': return val1 + (-1) * val2;
         case '*': return val1 * val2;
         case '/': return val1 / val2;
         case TK_AND: return val1 && val2;
@@ -279,8 +279,9 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  bool is_succsess = true;
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  return eval(0, nr_token - 1);
+  word_t expr_ans = eval(0, nr_token - 1, &is_succsess);
+  return is_succsess ? expr_ans : 0;
 }
