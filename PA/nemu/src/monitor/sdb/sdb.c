@@ -82,7 +82,7 @@ static int cmd_x(char *args){
   int addr_to_read = 0;
   for(int i = 0; i < num_n; i ++){
     addr_to_read = addr + i * 4;
-    printf("\t0x%x", paddr_read(addr_to_read, 4));
+    printf("0x%-10x", paddr_read(addr_to_read, 4));
   }
   printf("\n");
   return 0;
