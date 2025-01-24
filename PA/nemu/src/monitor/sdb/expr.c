@@ -143,7 +143,7 @@ static bool make_token(char *e) {
             nr_token --;
             break;
           case '-':
-            if(tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')'){
+            if((nr_token != 0) && (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
               tokens[nr_token].type = TK_NEGATIVE;//negatie
             }else{
               tokens[nr_token].type = rules[i].token_type;
