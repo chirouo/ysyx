@@ -262,6 +262,9 @@ static word_t eval(int p, int q, bool * success) {
       return eval(p + 1, q - 1, success);
     }else {
       int op = get_main_operator(p, q);
+      if(tokens[op].type == '!'){
+        return !eval(op + 1, q, success);
+      }
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
         assert(0);
@@ -271,7 +274,6 @@ static word_t eval(int p, int q, bool * success) {
       printf("val1 = %d, val2 = %d\n", val1, val2);
       
       switch (tokens[op].type) {
-        case '!': return val2 * (-1);
         case '+': return val1 + val2;
         case '-': return val1 + (-1) * val2;
         case '*': return val1 * val2;
