@@ -173,16 +173,22 @@ static bool make_token(char *e) {
   return true;
 }
 
-
 static bool check_parentheses(int p, int q) {
-  if (tokens[p].type == '(' && tokens[q].type == ')') {
-    int count = 0;
-    for(int i = p; i <= q; i ++) {
-      if(tokens[i].type == '(') count ++;
-      if(tokens[i].type == ')') count --;
+  static int stack[1024];
+  int top = -1;
+  int len = 0;
+  for(int i = p; i <= q; i ++) {
+    if(tokens[i].type == '(') {
+      top ++;
+      stack[top] = i;
     }
-    return count == 0 ? true : false;
+    if(tokens[i].type == ')') {
+      if(top == 0) return false;
+      if(len < i - stack[top]) len = i - stack[top];
+      top --;
+    }
   }
+  if(top == -1 && len == q - p) return true;
   return false;
 }
 static int get_main_operator(int p, int q) {
