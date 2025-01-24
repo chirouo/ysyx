@@ -79,11 +79,10 @@ static int cmd_x(char *args){
   Log("debug ---------- addr: '0x%x'\n", addr);
   int num_n = atoi(n);
   int addr_to_read = 0;
+  printf("0x%x:", addr_to_read);
   for(int i = 0; i < num_n; i ++){
     addr_to_read = addr + i * 4;
-    printf("0x%-10x:", addr_to_read);
-    printf("0x%-10x", paddr_read(addr + i * 4, 4));
-    printf("\n");
+    printf("\t0x%x", paddr_read(addr + i * 4, 4));
   }
   return 0;
 }
