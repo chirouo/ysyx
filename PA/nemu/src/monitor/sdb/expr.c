@@ -144,7 +144,9 @@ static bool make_token(char *e) {
             break;
           case '-':
             // remove the first character '-' as a negative sign,but as a minus sign
-            if((nr_token == 0) || (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
+            // Because of associativity, the operator on the right has higher precedence, 
+            //and the --1 case returns the answer directly with the second negative sign
+            if((nr_token != 0) && (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
               tokens[nr_token].type = TK_NEGATIVE;//negatie
             }else{
               tokens[nr_token].type = rules[i].token_type;
