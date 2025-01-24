@@ -78,12 +78,13 @@ static int cmd_x(char *args){
   Log("debug ---------- expr: '%s'\n", expr);
   Log("debug ---------- addr: '0x%x'\n", addr);
   int num_n = atoi(n);
+  printf("0x%x:", addr);
   int addr_to_read = 0;
-  printf("0x%x:", addr_to_read);
   for(int i = 0; i < num_n; i ++){
     addr_to_read = addr + i * 4;
-    printf("\t0x%x", paddr_read(addr + i * 4, 4));
+    printf("\t0x%x", paddr_read(addr_to_read, 4));
   }
+  printf("\n");
   return 0;
 }
 static int cmd_p(char *args){
