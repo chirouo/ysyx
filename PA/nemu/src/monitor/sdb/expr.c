@@ -22,7 +22,7 @@
 /*gx 添加paddr.h*/
 #include "memory/paddr.h"
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NE, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR
+  TK_NOTYPE = 256, TK_EQ, TK_NE, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR, TK_NEGATIVE
 
   /* TODO: Add more token types */
 
@@ -51,7 +51,7 @@ static struct rule {
   {"\\*", '*'},       // multiply
   {"\\/", '/'},        // divide
   {"\\%", '%'},        // modulo
-  {"!", '!'},          // not || negative
+  {"!", '!'},          // not
   {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
 };
 
@@ -144,7 +144,7 @@ static bool make_token(char *e) {
             break;
           case '-':
             if(nr_token == 0 || (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
-              tokens[nr_token].type = '!';//negatie
+              tokens[nr_token].type = TK_NEGATIVE;//negatie
             }else{
               tokens[nr_token].type = rules[i].token_type;
             }
@@ -198,6 +198,12 @@ static int get_main_operator(int p, int q) {
     }
     if(count == 0){
       if(tokens[i].type == '!'){
+        if(pri <= 12){
+          index = i;
+          pri = 12;
+        }
+      }
+      if(tokens[i].type == TK_NEGATIVE){
         if(pri <= 11){
           index = i;
           pri = 11;
