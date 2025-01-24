@@ -197,18 +197,6 @@ static int get_main_operator(int p, int q) {
       count --;
     }
     if(count == 0){
-      if(tokens[i].type == '!'){
-        if(pri <= 12){
-          index = i;
-          pri = 12;
-        }
-      }
-      if(tokens[i].type == TK_NEGATIVE){
-        if(pri <= 11){
-          index = i;
-          pri = 11;
-        }
-      }
       if(tokens[i].type == TK_OR){
         if(pri <= 10){
           index = i;
@@ -233,10 +221,22 @@ static int get_main_operator(int p, int q) {
           pri = 7;
         }
       }
-      if(tokens[i].type == TK_EQ || tokens[i].type == TK_NE){
+      if(tokens[i].type == '!'){
         if(pri <= 6){
           index = i;
           pri = 6;
+        }
+      }
+      if(tokens[i].type == TK_NEGATIVE){
+        if(pri <= 5){
+          index = i;
+          pri = 5;
+        }
+      }
+      if(tokens[i].type == TK_EQ || tokens[i].type == TK_NE){
+        if(pri <= 4){
+          index = i;
+          pri = 4;
         }
       }
     }
@@ -270,14 +270,10 @@ static word_t eval(int p, int q, bool * success) {
       word_t val1, val2;
       int op = get_main_operator(p, q);
       if(tokens[op].type == '!'){
-        val1 = eval(p, op - 1, success);
-        val2 = !eval(op + 1, q, success);
-        return val1 + val2;
+        return !eval(op + 1, q, success);
       }
       if(tokens[op].type == TK_NEGATIVE){
-        val1 = eval(p, op - 1, success);
-        val2 = -eval(op + 1, q, success);
-        return val1 + val2;
+        return -eval(op + 1, q, success);
       }
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
