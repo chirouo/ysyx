@@ -183,7 +183,7 @@ static bool check_parentheses(int p, int q) {
       stack[top] = i;
     }
     if(tokens[i].type == ')') {
-      if(top == 0) return false;
+      if(top == -1) return false;
       if(len < i - stack[top]) len = i - stack[top];
       top --;
     }
