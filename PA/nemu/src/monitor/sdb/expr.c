@@ -143,10 +143,7 @@ static bool make_token(char *e) {
             nr_token --;
             break;
           case '-':
-            // remove the first character '-' as a negative sign,but as a minus sign
-            // Because of associativity, the operator on the right has higher precedence, 
-            //and the --1 case returns the answer directly with the second negative sign
-            if((nr_token != 0) && (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
+            if(nr_token == 0 || (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
               tokens[nr_token].type = TK_NEGATIVE;//negatie
             }else{
               tokens[nr_token].type = rules[i].token_type;
@@ -231,9 +228,9 @@ static int get_main_operator(int p, int q) {
         }
       }
       if(tokens[i].type == TK_NEGATIVE){
-        if(pri <= 5){
+        if(pri <= 11){
           index = i;
-          pri = 5;
+          pri = 11;
         }
       }
       if(tokens[i].type == TK_EQ || tokens[i].type == TK_NE){
@@ -272,21 +269,26 @@ static word_t eval(int p, int q, bool * success) {
     }else {
       word_t val1, val2;
       int op = get_main_operator(p, q);
-      if(tokens[op].type == '!'){
+      int op_type = tokens[op].type;
+      if(op_type == '!'){
         return !eval(op + 1, q, success);
       }
-      if(tokens[op].type == TK_NEGATIVE){
-        return -eval(op + 1, q, success);
+      if(op_type == TK_NEGATIVE){
+        val1 = -1;
+        val2 = eval(op + 1, q, success);
+        op_type = '*';
+
+      }else{
+        val1 = eval(p, op - 1, success);
+        val2 = eval(op + 1, q, success);
       }
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
         assert(0);
       }
-      val1 = eval(p, op - 1, success);
-      val2 = eval(op + 1, q, success);
       printf("val1 = %d, val2 = %d\n", val1, val2);
       
-      switch (tokens[op].type) {
+      switch (op_type) {
         case '+': return val1 + val2;
         case '-': return val1 - val2;
         case '*': return val1 * val2;
