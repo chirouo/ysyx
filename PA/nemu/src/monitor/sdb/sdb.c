@@ -83,7 +83,7 @@ static int cmd_x(char *args){
     addr_to_read = addr + i * 4;
     if(i % 4 == 0) printf("0x%x:", addr_to_read);
     printf("0x%-10x", paddr_read(addr_to_read, 4));
-    if(i % 3 == 0) printf("\n");
+    if(i % 4 == 3) printf("\n");
   }
   return 0;
 }
