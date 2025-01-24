@@ -269,7 +269,9 @@ static word_t eval(int p, int q, bool * success) {
     }else {
       int op = get_main_operator(p, q);
       if(tokens[op].type == '!'){
-        return -eval(op + 1, q, success);
+        return !eval(op + 1, q, success);
+      }
+      if(tokens[op].type == TK_NE){
       }
       if(op == -2) {
         Log("debug----expr->eval: parentheses didnt == 2x");
