@@ -51,7 +51,7 @@ static struct rule {
   {"\\*", '*'},       // multiply
   {"\\/", '/'},        // divide
   {"\\%", '%'},        // modulo
-  {"!", '!'},          // 
+  {"!", '!'},          // not || negative
   {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
 };
 
@@ -142,8 +142,13 @@ static bool make_token(char *e) {
           case TK_NOTYPE:
             nr_token --;
             break;
-          case '+':
           case '-':
+            if(nr_token == 0 || (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
+              tokens[nr_token].type = '!';//negatie
+            }else{
+              tokens[nr_token].type = rules[i].token_type;
+            }
+          case '+':
           case '(':
           case ')':
           case '*':
@@ -191,6 +196,12 @@ static int get_main_operator(int p, int q) {
       count --;
     }
     if(count == 0){
+      if(tokens[i].type == TK_NE){
+        if(pri <= 11){
+          index = i;
+          pri = 11;
+        }
+      }
       if(tokens[i].type == TK_OR){
         if(pri <= 10){
           index = i;
@@ -259,6 +270,7 @@ static word_t eval(int p, int q, bool * success) {
       printf("val1 = %d, val2 = %d\n", val1, val2);
       
       switch (tokens[op].type) {
+        case '!': return val2 * (-1);
         case '+': return val1 + val2;
         case '-': return val1 + (-1) * val2;
         case '*': return val1 * val2;
