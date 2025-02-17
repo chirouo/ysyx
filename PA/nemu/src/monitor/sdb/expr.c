@@ -40,7 +40,7 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
   {"!=", TK_NE},        // not equal
-  {"^(0x)[0-9a-fA-F]+", TK_ADDR}, // hex number
+  {"^(0x)[0-9a-fA-F]+", TK_HEX}, // hex number
   {"[0-9]+", TK_NUM},   // number
   {"\\(", '('},        // left parenthesis
   {"\\)", ')'},        // right parenthesis
@@ -52,8 +52,7 @@ static struct rule {
   {"\\/", '/'},        // divide
   {"\\%", '%'},        // modulo
   {"!", '!'},          // not
-  {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
-  {"0x[0-9a-fA-F]+", TK_HEX}
+  {"\\$[$a-z0-9]{2,3}", TK_REG}       // register
 };
 
 #define NR_REGEX ARRLEN(rules)
