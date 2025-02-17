@@ -238,7 +238,7 @@ static int get_main_operator(int p, int q) {
           pri = 6;
         }
       }
-      if(tokens[i].type == TK_NEGATIVE){
+      if(tokens[i].type == TK_NEGATIVE || tokens[i].type == TK_DEREF){
         if(pri <= 5){
           index = i;
           pri = 5;
