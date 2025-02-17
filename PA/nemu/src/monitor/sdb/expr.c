@@ -116,6 +116,12 @@ static bool make_token(char *e) {
             tokens[nr_token].type = rules[i].token_type;
             break;
           case TK_HEX:
+            tokens[nr_token].type = rules[i].token_type;
+            char hex_str[32] = {};
+            strncpy(hex_str, substr_start + 2, substr_len - 2);
+            uint32_t decimal = strtoul(hex_str, NULL, 16);
+            sprintf(tokens[nr_token].str, "%d", decimal);
+            break;
           case TK_NUM:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
