@@ -226,7 +226,7 @@ void test_expr() {
   word_t correct_res;
   size_t len = 0;
   ssize_t read;
-  bool success = false;
+  bool success = success;
 
   while (true) {
     if(fscanf(fp, "%u ", &correct_res) == -1) break;
