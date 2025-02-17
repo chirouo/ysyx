@@ -328,7 +328,9 @@ static word_t eval(int p, int q, bool * success) {
       }
     }
 }
-word_t expr(char *e, bool *success) {
+word_t expr(char *e) {
+  bool* success = (bool*)malloc(sizeof(bool));
+  *success = true;
   if (!make_token(e)) {
     *success = false;
     return 0;
@@ -336,6 +338,9 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   word_t expr_ans = eval(0, nr_token - 1, success);
-
-  return *success ? expr_ans : 0;
+  if(*success == false) {
+    assert(0);
+  }
+  // free(success);
+  return expr_ans;
 }

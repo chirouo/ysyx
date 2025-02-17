@@ -91,7 +91,7 @@ static int cmd_p(char *args){
   char *expr_str = args;
   Log("debug ---------- '%s'\n", expr_str);
   bool success = true;
-  word_t result = expr(expr_str, &success);
+  word_t result = expr(expr_str);
   if(success == false) {
     Log("debug ---------- '%s' is not a valid expression\n", expr_str);
     return 0;
@@ -103,8 +103,13 @@ static int cmd_p(char *args){
   return 0;
 }
 static int cmd_w(char *args){
-  char *expr = args;
-  Log("debug ---------- '%s'\n", expr);
+  char *expression = args;
+  Log("debug ---------- '%s'\n", expression);
+  WP* wp = new_wp();
+  wp->expr = expression;
+  wp->new = expr(wp->expr);
+  wp->old = wp->new;
+  Log("Watch_Point NO%d new successfully, value = %u", wp->NO, wp->new);
   return 0;
 }
 static int cmd_d(char *args){
@@ -226,16 +231,14 @@ void test_expr() {
   word_t correct_res;
   size_t len = 0;
   ssize_t read;
-  bool success = success;
 
   while (true) {
     if(fscanf(fp, "%u ", &correct_res) == -1) break;
     read = getline(&e, &len, fp);
     e[read-1] = '\0';
     
-    word_t res = expr(e, &success);
+    word_t res = expr(e);
     
-    assert(success);
     if (res != correct_res) {
       puts(e);
       printf("expected: %u, got: %u\n", correct_res, res);

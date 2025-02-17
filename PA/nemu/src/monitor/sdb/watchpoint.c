@@ -22,7 +22,9 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-
+  char* expr;
+  uint32_t new;
+  uint32_t old;
 } WP;
 
 static WP wp_pool[NR_WP] = {};
@@ -38,6 +40,45 @@ void init_wp_pool() {
   head = NULL;
   free_ = wp_pool;
 }
-
 /* TODO: Implement the functionality of watchpoint */
+WP* new_wp(){
+  if(free_ == NULL) assert(0);
+  WP* free_node = free_;
+  if(free_->next == NULL) free_ = NULL;
+  else free_ = free_->next;
+  
+  if(head == NULL) head = free_node;
+  else{
+    free_node->next = head->next;
+    head->next = free_node;
+  }
+  return free_node;
+}
+void free_wp(WP *wp){
+  if(head == NULL) assert(0);
+  if(wp == NULL) assert(0);
+  WP* cur = head;
+  while(cur->next == NULL)
+  {
+      if(cur->next == wp){
+        cur->next = wp->next;
+      }
+  }
+  if(free_ != NULL){
+    wp->next = free_->next;
+    free_->next = wp;
+  }
+}
+void wp_literate(){
+  if(head == NULL) return;
+  WP* cur = head;
+  while(cur->next != NULL){
+    cur->new = expr(cur->expr);
+    if(cur->old != cur->new) {
+      Log("Watch_Point_%d is Changed! Old_Value = %u, New_Value = %u", cur->NO, cur->old, cur->new);
+      cur->old = cur->new;
+      nemu_state.state = NEMU_STOP;
+    }
+  }
+}
 
