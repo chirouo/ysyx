@@ -82,3 +82,11 @@ void wp_literate(){
   }
 }
 
+void wp_watch(char* args){
+  WP* wp = new_wp();
+  wp->expr = args;
+  wp->new = expr(wp->expr);
+  wp->old = wp->new;
+  Log("Watch_Point NO%d new successfully, value = %u", wp->NO, wp->new);
+}
+

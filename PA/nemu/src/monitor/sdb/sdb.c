@@ -105,11 +105,7 @@ static int cmd_p(char *args){
 static int cmd_w(char *args){
   char *expression = args;
   Log("debug ---------- '%s'\n", expression);
-  WP* wp = new_wp();
-  wp->expr = expression;
-  wp->new = expr(wp->expr);
-  wp->old = wp->new;
-  Log("Watch_Point NO%d new successfully, value = %u", wp->NO, wp->new);
+  wp_watch(args);
   return 0;
 }
 static int cmd_d(char *args){
