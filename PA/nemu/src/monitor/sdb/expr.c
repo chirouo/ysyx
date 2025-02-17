@@ -204,43 +204,43 @@ static int get_main_operator(int p, int q) {
     }
     if(count == 0){
       if(tokens[i].type == TK_OR){
-        if(pri < 10){
+        if(pri <= 10){
           index = i;
           pri = 10;
         }
       }
       if(tokens[i].type == TK_AND){
-        if(pri < 9){
+        if(pri <= 9){
           index = i;
           pri = 9;
         }
       }
       if(tokens[i].type == '+' || tokens[i].type == '-') {
-        if(pri < 8){
+        if(pri <= 8){
           index = i;
           pri = 8;
         }
       }
       if(tokens[i].type == '*' || tokens[i].type == '/') {
-        if(pri < 7){
+        if(pri <= 7){
           index = i;
           pri = 7;
         }
       }
       if(tokens[i].type == '!'){
-        if(pri < 6){
+        if(pri <= 6){
           index = i;
           pri = 6;
         }
       }
       if(tokens[i].type == TK_NEGATIVE){
-        if(pri < 5){
+        if(pri <= 5){
           index = i;
           pri = 5;
         }
       }
       if(tokens[i].type == TK_EQ || tokens[i].type == TK_NE){
-        if(pri < 4){
+        if(pri <= 4){
           index = i;
           pri = 4;
         }
