@@ -289,6 +289,7 @@ static word_t eval(int p, int q, bool * success) {
         val2 = eval(op + 1, q, success);
       }
       if(op == -2) {
+        *success = false;
         Log("debug----expr->eval: parentheses didnt == 2x");
         assert(0);
       }
@@ -307,7 +308,7 @@ static word_t eval(int p, int q, bool * success) {
         case TK_NE:
           Log("debug----expr->eval: TK_NE");
           return val1 != val2 ? 1 : 0;
-        default:  Log("debug----expr->eval: switch tokens[op].type error"); assert(0);
+        default:  *success = false; Log("debug----expr->eval: switch tokens[op].type error"); assert(0);
       }
     }
 }
@@ -316,9 +317,9 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  bool is_succsess = true;
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-  word_t expr_ans = eval(0, nr_token - 1, &is_succsess);
-  return is_succsess ? expr_ans : 0;
+  word_t expr_ans = eval(0, nr_token - 1, success);
+
+  return *success ? expr_ans : 0;
 }
