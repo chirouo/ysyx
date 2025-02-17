@@ -22,7 +22,7 @@
 /*gx 添加paddr.h*/
 #include "memory/paddr.h"
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NE, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR, TK_NEGATIVE
+  TK_NOTYPE = 256, TK_EQ, TK_NE, TK_NUM, TK_ADDR, TK_REG, TK_AND, TK_OR, TK_NEGATIVE, TK_HEX, TK_DEREF
 
   /* TODO: Add more token types */
 
@@ -53,6 +53,7 @@ static struct rule {
   {"\\%", '%'},        // modulo
   {"!", '!'},          // not
   {"\\$[$a-z0-9]{2,3}", TK_REG},        // register
+  {"0x[0-9a-fA-F]+", TK_HEX}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -110,22 +111,14 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
           case TK_EQ:
-            tokens[nr_token].type = rules[i].token_type;
-            break;
           case TK_NE:
+          case TK_AND:
             tokens[nr_token].type = rules[i].token_type;
             break;
+          case TK_HEX:
           case TK_NUM:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            break;
-          case TK_ADDR:
-            paddr_t address_hex = 0;
-            tokens[nr_token].type = rules[i].token_type;
-            strncpy(tokens[nr_token].str, substr_start+2, substr_len-2);
-            sscanf(tokens[nr_token].str, "%x", &address_hex);
-            word_t addr_val = paddr_read(address_hex, 4);
-            sprintf(tokens[nr_token].str, "%d", addr_val);
             break;
           case TK_REG:
             bool get_reg_value = false;
@@ -149,10 +142,16 @@ static bool make_token(char *e) {
               tokens[nr_token].type = rules[i].token_type;
             }
             break;
+          case '*':
+            if(nr_token == 0 || (tokens[nr_token - 1].type != TK_NUM && tokens[nr_token - 1].type != ')')){
+              tokens[nr_token].type = TK_DEREF;//dereference
+            }else{
+              tokens[nr_token].type = rules[i].token_type;
+            }
+            break;
           case '+':
           case '(':
           case ')':
-          case '*':
           case '/':
           case '%':
             tokens[nr_token].type = rules[i].token_type;
@@ -284,7 +283,13 @@ static word_t eval(int p, int q, bool * success) {
         val2 = eval(op + 1, q, success);
         op_type = '*';
 
-      }else{
+      }else if(op_type == TK_DEREF){
+        val1 = 1;
+        paddr_t address_hex = eval(op + 1, q, success);
+        val2 = paddr_read(address_hex, 4);
+        op_type = '*';
+      }
+      else{
         val1 = eval(p, op - 1, success);
         val2 = eval(op + 1, q, success);
       }
@@ -299,7 +304,13 @@ static word_t eval(int p, int q, bool * success) {
         case '+': return val1 + val2;
         case '-': return val1 - val2;
         case '*': return val1 * val2;
-        case '/': return val1 / val2;
+        case '/': 
+          if (val2 == 0) {
+            *success = false;
+            Log("debug----expr->eval: divide by zero");
+            assert(0);
+          }
+          return val1 / val2;
         case TK_AND: return val1 && val2;
         case TK_OR: return val1 || val2;
         case TK_EQ: 
