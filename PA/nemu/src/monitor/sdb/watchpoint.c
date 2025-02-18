@@ -105,7 +105,7 @@ void wp_display(){
   }
   WP* cur = head;
   printf("Num\tType\t\tWhat\t\tOldValue\tNewValue\n");
-  while(cur->next != NULL && cur->expr != NULL)
+  while(cur != NULL && cur->expr != NULL)
   {
     printf("%d\twatchpoint\t%s\t\t%u\t\t%u\n", cur->NO, cur->expr, cur->old, cur->new);
     cur = cur->next;
