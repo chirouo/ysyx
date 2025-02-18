@@ -105,6 +105,6 @@ void wp_display(){
     printf("%d\twatchpoint\t%s\t\t%u\t\t%u\n", cur->NO, cur->expr, cur->old, cur->new);
     cur = cur->next;
   }
-  wp_diff_test();
+  // wp_diff_test();
 }
 
