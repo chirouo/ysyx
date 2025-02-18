@@ -109,8 +109,10 @@ static int cmd_w(char *args){
   return 0;
 }
 static int cmd_d(char *args){
-  char *n = args;
-  Log("debug ---------- '%s'\n", n);
+  Log("debug ---------- '%s'\n", args);
+  int no;
+  sscanf(args,"%d", &no);
+  wp_delete(no);
   return 0;
 }
 static int cmd_set_reg(char *args){
