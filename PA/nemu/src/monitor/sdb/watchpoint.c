@@ -52,20 +52,10 @@ WP* new_wp(){
   head = free_node;
   return free_node;
 }
-void free_wp(WP *wp){
-  if(head == NULL) assert(0);
-  if(wp == NULL) assert(0);
-  WP* cur = head;
-  while(cur->next == NULL)
-  {
-      if(cur->next == wp){
-        cur->next = wp->next;
-      }
-  }
-  if(free_ != NULL){
-    wp->next = free_->next;
-    free_->next = wp;
-  }
+void wp_free(WP *wp){
+  wp->next = free_;
+  free_ = wp;
+  return;
 }
 void wp_diff_test(){
   Log("enter wp_diff_test");
@@ -106,5 +96,28 @@ void wp_display(){
     cur = cur->next;
   }
   // wp_diff_test();
+}
+
+void wp_delete(int no){
+  if(head == NULL){
+    Log("The list of watchpoints is empty");
+    return;
+  }
+  WP* cur = head;
+  WP* pre = head;
+  while(cur != NULL){
+    if(cur->NO == no){
+      if(pre == cur){
+        head = NULL;
+      }else{
+        pre->next = cur->next;
+      }
+      return wp_free(cur);
+    }else {
+      pre = cur;
+      cur = cur->next;
+    }
+  }
+  Log("No%d watchpoint did not exist!", no);
 }
 
