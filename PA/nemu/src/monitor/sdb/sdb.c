@@ -65,7 +65,7 @@ static int cmd_info(char *args){
   if (strcmp(subcmd,"r")==0){
     isa_reg_display();
   }else if (strcmp(subcmd,"w")==0){
-    // isa_wp_display();
+    wp_display();
   }
   return 0;
 }

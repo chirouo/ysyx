@@ -94,3 +94,17 @@ void wp_watch(char* args){
   Log("Watch_Point NO%d new successfully, value = %u", wp->NO, wp->new);
 }
 
+void wp_display(){
+  if(head == NULL){
+    Log("display error: all watchpoint is free, head = NULL");
+    return;
+  }
+
+  WP* cur = head;
+  while(cur->next == NULL)
+  {
+    
+    cur = cur->next;
+  }
+}
+

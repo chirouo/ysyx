@@ -26,6 +26,6 @@
 //There is no need to expose other interfaces containing struct wp;
 void wp_watch(char* args);
 void wp_diff_test();
-
+void wp_display();
 word_t expr(char *e);
 #endif
