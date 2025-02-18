@@ -19,8 +19,13 @@
 #include <common.h>
 #include "../../isa/riscv32/local-include/reg.h"
 // #include "expr.c"
+// #include "watchpoint.c"
 /*By GX*/
 #include "memory/paddr.h"
+
+
+void wp_watch(char* args);
+void wp_diff_test();
+
 word_t expr(char *e);
-extern WP;
 #endif

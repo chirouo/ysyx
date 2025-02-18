@@ -69,7 +69,7 @@ void free_wp(WP *wp){
     free_->next = wp;
   }
 }
-void wp_literate(){
+void wp_diff_test(){
   if(head == NULL) return;
   WP* cur = head;
   while(cur->next != NULL){
