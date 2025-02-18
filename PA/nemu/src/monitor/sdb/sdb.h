@@ -23,7 +23,7 @@
 /*By GX*/
 #include "memory/paddr.h"
 
-
+//There is no need to expose other interfaces containing struct wp;
 void wp_watch(char* args);
 void wp_diff_test();
 
