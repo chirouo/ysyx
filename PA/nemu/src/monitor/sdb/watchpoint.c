@@ -19,12 +19,11 @@
 
 typedef struct watchpoint {
   int NO;
-  struct watchpoint *next;
-
-  /* TODO: Add more members if necessary */
   char* expr;
   uint32_t new;
   uint32_t old;
+  struct watchpoint *next;
+  /* TODO: Add more members if necessary */
 } WP;
 
 static WP wp_pool[NR_WP] = {};
