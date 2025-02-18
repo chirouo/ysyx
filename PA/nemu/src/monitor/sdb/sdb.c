@@ -138,7 +138,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","Step any instruction",cmd_si},
-  {"info","Display register or watchpoint",cmd_info},
+  {"infi","Display register or watchpoint",cmd_info},
   {"x","Display N bytes of memory beginning at address $expr",cmd_x},
   {"p","Print the value of $expr",cmd_p},
   {"w","Stop program when $expr is changed",cmd_w},
