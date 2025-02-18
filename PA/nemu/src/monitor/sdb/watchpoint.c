@@ -70,7 +70,11 @@ void free_wp(WP *wp){
   }
 }
 void wp_diff_test(){
-  if(head == NULL) return;
+  Log("enter wp_diff_test");
+  if(head == NULL) {
+    Log("wp head == NULL");
+    return;
+  }
   WP* cur = head;
   while(cur->next != NULL){
     cur->new = expr(cur->expr);
