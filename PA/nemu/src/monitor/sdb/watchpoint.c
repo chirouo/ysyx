@@ -89,10 +89,10 @@ void wp_diff_test(){
     }
   }
 }
-void wp_watch(char* args){
+void wp_watch(char* expression){
   WP* wp = new_wp();
-  // wp->expr = args;
-  strcpy(wp->expr, args);
+  // wp->expr = expression;
+  strcpy(wp->expr, expression);
   wp->new = expr(wp->expr);
   wp->old = wp->new;
   Log("Watch_Point NO%d new successfully, value = %u, expr = %s", wp->NO, wp->new, wp->expr);
