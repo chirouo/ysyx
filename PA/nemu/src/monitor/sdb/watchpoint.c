@@ -99,10 +99,10 @@ void wp_display(){
     return;
   }
   WP* cur = head;
-  printf("Num\tType\tWhat\tOldValue\tNewValue\n");
+  printf("Num\tType\t\tWhat\tOldValue\tNewValue\n");
   while(cur->next != NULL)
   {
-    printf("%d\twatchpoint\t%s\t%u\t%u\n", cur->NO, cur->expr, cur->old, cur->new);
+    printf("%d\twatchpoint\t\t%s\t%u\t%u\n", cur->NO, cur->expr, cur->old, cur->new);
     cur = cur->next;
   }
 }
