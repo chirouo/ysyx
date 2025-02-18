@@ -81,6 +81,7 @@ void wp_diff_test(){
       cur->old = cur->new;
       nemu_state.state = NEMU_STOP;
     }
+    cur = cur->next;
   }
 }
 void wp_watch(char* expression){
