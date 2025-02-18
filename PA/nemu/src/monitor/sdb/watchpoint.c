@@ -90,7 +90,7 @@ void wp_watch(char* args){
   wp->expr = args;
   wp->new = expr(wp->expr);
   wp->old = wp->new;
-  Log("Watch_Point NO%d new successfully, value = %u", wp->NO, wp->new);
+  Log("Watch_Point NO%d new successfully, value = %u, expr = %s", wp->NO, wp->new, wp->expr);
 }
 
 void wp_display(){
