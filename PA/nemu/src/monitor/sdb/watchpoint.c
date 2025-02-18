@@ -42,10 +42,12 @@ void init_wp_pool() {
 }
 /* TODO: Implement the functionality of watchpoint */
 WP* new_wp(){
-  if(free_ == NULL) assert(0);
+  if(free_ == NULL) {
+    Log("watchpoints if full ! there is no free watchpoints");
+    assert(0);
+  }
   WP* free_node = free_;
-  if(free_->next == NULL) free_ = NULL;
-  else free_ = free_->next;
+  free_ = free_->next;
   
   if(head == NULL) head = free_node;
   else{
