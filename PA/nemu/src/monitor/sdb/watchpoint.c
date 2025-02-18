@@ -19,7 +19,7 @@
 
 typedef struct watchpoint {
   int NO;
-  char expr[128];
+  char expr[128];//不能直接用char* expr
   uint32_t new;
   uint32_t old;
   struct watchpoint *next;
