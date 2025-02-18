@@ -74,7 +74,7 @@ void wp_diff_test(){
     return;
   }
   WP* cur = head;
-  while(cur->next != NULL){
+  while(cur != NULL){
     cur->new = expr(cur->expr);
     if(cur->old != cur->new) {
       Log("Watch_Point_%d is Changed! Old_Value = %u, New_Value = %u", cur->NO, cur->old, cur->new);
