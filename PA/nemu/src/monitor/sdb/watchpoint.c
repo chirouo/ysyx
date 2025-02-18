@@ -85,7 +85,6 @@ void wp_diff_test(){
     }
   }
 }
-
 void wp_watch(char* args){
   WP* wp = new_wp();
   wp->expr = args;
@@ -99,11 +98,11 @@ void wp_display(){
     Log("display error: all watchpoint is free, head = NULL");
     return;
   }
-
   WP* cur = head;
+  printf("Num\tType\tWhat\tOldValue\tNewValue\n");
   while(cur->next == NULL)
   {
-    
+    printf("%d\twatchpoint\t%s\t%u\t%u\n", cur->NO, cur->expr, cur->old, cur->new);
     cur = cur->next;
   }
 }
