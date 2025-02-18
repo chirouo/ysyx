@@ -48,14 +48,8 @@ WP* new_wp(){
   WP* free_node = free_;
   free_ = free_->next;
   
-  if(head == NULL) {
-    head = free_node;
-    head->next = NULL;
-  }
-  else{
-    free_node->next = head->next;
-    head->next = free_node;
-  }
+  free_node->next = head;
+  head = free_node;
   return free_node;
 }
 void free_wp(WP *wp){
