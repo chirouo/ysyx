@@ -91,7 +91,7 @@ static int cmd_p(char *args){
   char *expr_str = args;
   Log("debug ---------- '%s'\n", expr_str);
   bool success = true;
-  word_t result = expr(expr_str);
+  word_t result = expr(expr_str, &success);
   if(success == false) {
     Log("debug ---------- '%s' is not a valid expression\n", expr_str);
     return 0;
@@ -230,13 +230,17 @@ void test_expr() {
   size_t len = 0;
   ssize_t read;
 
+  bool success;
   while (true) {
     if(fscanf(fp, "%u ", &correct_res) == -1) break;
     read = getline(&e, &len, fp);
     e[read-1] = '\0';
-    
-    word_t res = expr(e);
-    
+    success = true;
+    word_t res = expr(e, &success);
+    if(!success){
+      Log("Invalid expression:%s!", e);
+      assert(0);
+    }
     if (res != correct_res) {
       puts(e);
       printf("expected: %u, got: %u\n", correct_res, res);

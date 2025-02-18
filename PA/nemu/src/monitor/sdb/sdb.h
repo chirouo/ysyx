@@ -28,5 +28,5 @@ void wp_watch(char* args);
 void wp_diff_test();
 void wp_display();
 void wp_delete(int no);
-word_t expr(char *e);
+word_t expr(char *e, bool* success);
 #endif

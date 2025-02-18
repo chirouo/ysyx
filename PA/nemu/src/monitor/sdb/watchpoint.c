@@ -64,8 +64,15 @@ void wp_diff_test(){
     return;
   }
   WP* cur = head;
+  bool success;
   while(cur != NULL){
-    cur->new = expr(cur->expr);
+    success = true;
+    word_t res = expr(cur->expr, &success);
+    if(!success){
+      Log("Invalid expression!");
+      assert(0);
+    }
+    cur->new = res;
     if(cur->old != cur->new) {
       Log("Watch_Point_%d is Changed! Old_Value = %u, New_Value = %u", cur->NO, cur->old, cur->new);
       cur->old = cur->new;
@@ -75,10 +82,16 @@ void wp_diff_test(){
   }
 }
 void wp_watch(char* expression){
+  bool success = true;
+  word_t res = expr(expression, &success);
+  if(!success){
+    Log("Invalid expression");
+    return;
+  }
   WP* wp = new_wp();
   // wp->expr = expression;
   strcpy(wp->expr, expression);
-  wp->new = expr(wp->expr);
+  wp->new = res;
   wp->old = wp->new;
   Log("Watch_Point NO%d new successfully, value = %u, expr = %s", wp->NO, wp->new, wp->expr);
 }
