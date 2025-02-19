@@ -61,3 +61,13 @@ else
 # Include rules to build NEMU
 include $(NEMU_HOME)/scripts/native.mk
 endif
+
+.PHONY: count
+count:
+	@echo "Total lines in .c and .h files:"
+	@find . -name "*.[ch]" | xargs wc -l | grep total || find . -name "*.[ch]" | xargs wc -l
+	@echo "\nNon-empty lines in .c and .h files:"
+	@find . -name "*.[ch]" | xargs grep -v '^$$' | wc -l
+	@echo "\nLines written in PA2 (compared to PA0_PA1 branch):"
+	@git diff `git merge-base HEAD PA0_PA1` HEAD --stat -- "*.[ch]" | grep -E "files? changed" | awk '{print $$4}'
+
