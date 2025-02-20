@@ -1,6 +1,6 @@
 # 编译器设置
 CC = gcc
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall -Werror -g
 
 # 目标文件
 TARGET = yemu
@@ -21,4 +21,8 @@ run: $(TARGET)
 clean:
 	rm -f $(TARGET)
 
-.PHONY: all run clean
+# GDB调试
+gdb: $(TARGET)
+	gdb $(TARGET)
+
+.PHONY: all run clean gdb
